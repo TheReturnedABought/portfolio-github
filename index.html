@@ -285,10 +285,6 @@ section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
   cursor: pointer;
 }
 .image-gallery img:hover { border-color: var(--accent); }
-.image-gallery-empty {
-  font-family: var(--mono); font-size: 12px; color: var(--border);
-  padding: 0.75rem 0; font-style: italic;
-}
 
 .proof-link {
   display: inline-flex; align-items: center; gap: 6px;
@@ -518,7 +514,7 @@ footer a { color: var(--accent); text-decoration: none; }
       — projets personnels, hackathons, conférences, expériences professionnelles et challenges compétitifs. 
       Cette démarche m'a permis de tester mes compétences dans des contextes concrets et variés, souvent 
       sous pression ou avec des contraintes réelles. 
-      Les 7 thèmes ci-dessous regroupent mes activités par domaine de compétence.
+      Les 8 thèmes ci-dessous regroupent mes activités par domaine de compétence.
     </p>
     <br/>
     <p style="color:var(--text2); font-size:14px; font-style:italic;">
@@ -638,7 +634,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="theme-meta">
           <span class="type-badge type-projet">Projets</span>
-          <span class="theme-hours">12h validées</span>
+          <span class="theme-hours">8h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -735,7 +731,7 @@ footer a { color: var(--accent); text-decoration: none; }
           <div id="gallery-nnvisualiser" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
-        <!-- 3c: Training pipeline -->
+        <!-- 3d: Training pipeline -->
         <div class="activity-block">
           <p class="activity-label">Activité 3d</p>
           <p class="activity-title">AI Training Pipeline — Appliquer des papiers de recherche</p>
@@ -785,13 +781,13 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="theme-meta">
           <span class="type-badge type-projet">Projets</span>
-          <span class="theme-hours">8h validées</span>
+          <span class="theme-hours">6h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
       <div class="theme-body">
 
-        <!-- 4a: Idea Generator -->
+        <!-- 4a: Idea Generator (now 6h validated) -->
         <div class="activity-block">
           <p class="activity-label">Activité 4a</p>
           <p class="activity-title">Idea Generator — Chaînes de Markov</p>
@@ -802,15 +798,14 @@ footer a { color: var(--accent); text-decoration: none; }
           </div>
           <div class="hours-badge">
             <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~4h (une après-midi)</span></div>
-            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">6h</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'une application qui génère des idées de projets à l'aide de chaînes de Markov — un modèle probabiliste de génération de texte basé sur les transitions entre états. Le projet connexe Markov-Password-Predictor applique la même logique à la prédiction de mots de passe.</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'une application qui génère des idées de projets à l'aide de chaînes de Markov — un modèle probabiliste de génération de texte basé sur les transitions entre états.</p>
             <p><strong style="color:var(--text)">Apprentissages :</strong> Théorie et implémentation des chaînes de Markov, génération de texte statistique, comparaison avec les LLMs modernes.</p>
           </div>
 
           <a href="https://github.com/TheReturnedABought/Idea-Generator" target="_blank" class="proof-link gh-link">GitHub — Idea-Generator</a>
-          <a href="https://github.com/TheReturnedABought/Markov-Password-Predictor" target="_blank" class="proof-link gh-link">GitHub — Markov-Password-Predictor</a>
 
           <div class="reflexive-section" style="margin-top:1rem;">
             <div class="ref-label">✍ Analyse réflexive</div>
@@ -823,14 +818,11 @@ footer a { color: var(--accent); text-decoration: none; }
             <p>
               <strong>Comparaison avec les LLMs modernes.</strong> Ce projet m'a aidé à contextualiser ce que font réellement les grands modèles de langage. Là où une chaîne de Markov n'a aucune représentation sémantique du texte, un LLM comme GPT ou Claude encode le sens dans des espaces vectoriels de haute dimension et maintient une forme de mémoire contextuelle sur des centaines de tokens. La différence n'est pas seulement de degré — c'est une différence de nature. Implémenter une chaîne de Markov m'a permis de comprendre, par contraste, pourquoi les architectures transformer ont constitué un saut aussi radical.
             </p>
-            <p>
-              <strong>Application à la sécurité.</strong> Le projet Markov-Password-Predictor m'a montré une application directe en cybersécurité : un attaquant peut entraîner un modèle de Markov sur des listes de mots de passe compromis (rockyou.txt par exemple) pour générer des candidats bien plus réalistes qu'une approche par force brute naïve. Cela illustre pourquoi les politiques de mots de passe ne doivent pas se contenter d'imposer une longueur minimale.
-            </p>
           </div>
           <div id="gallery-markov" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
-        <!-- 4b: Markov Password Predictor -->
+        <!-- 4b: Markov Password Predictor (kept, 0h validated) -->
         <div class="activity-block">
           <p class="activity-label">Activité 4b</p>
           <p class="activity-title">Markov Password Predictor — Modélisation de mots de passe</p>
@@ -845,13 +837,11 @@ footer a { color: var(--accent); text-decoration: none; }
           </div>
           <div class="body-text">
             <p><strong style="color:var(--text)">Contexte :</strong> Mini-projet focalisé sur la génération de candidats de mots de passe via chaînes de Markov pour comprendre les patterns fréquents dans des jeux de données compromis.</p>
-            <p><strong style="color:var(--text)">Formation complémentaire :</strong> Cours Kaggle Learn <em>Python</em> complété (certificat du 10 mai 2026), suivi comme introduction/révision pour rafraîchir mes bases Python.</p>
           </div>
           <a href="https://github.com/TheReturnedABought/Markov-Password-Predictor" target="_blank" class="proof-link gh-link">GitHub — Markov-Password-Predictor</a>
-          <a href="https://www.kaggle.com/learn/python" target="_blank" class="proof-link">Kaggle Learn — Python</a>
         </div>
 
-        <!-- 4c: Text Adventure -->
+        <!-- 4c: Text Adventure (0h validated) -->
         <div class="activity-block">
           <p class="activity-label">Activité 4c</p>
           <p class="activity-title">Text Adventure Game — Architecture orientée données</p>
@@ -862,7 +852,7 @@ footer a { color: var(--accent); text-decoration: none; }
           </div>
           <div class="hours-badge">
             <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~24h (3 jours)</span></div>
-            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">0h</span></div>
           </div>
           <div class="body-text">
             <p><strong style="color:var(--text)">Contexte :</strong> Développement d'un jeu d'aventure textuel entièrement piloté par des données JSON, avec un parseur de variables et un système de combat. L'objectif était de séparer strictement la logique du contenu pour faciliter l'expansion.</p>
@@ -1119,6 +1109,54 @@ footer a { color: var(--accent); text-decoration: none; }
       </div>
     </div>
 
+    <!-- ═══ THEME 8 : PYTHON SKILLS REFRESH (KAGGLE) ═══ -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 8</span>
+          <span class="theme-title-text">Python Skills Refresh — Kaggle Learn</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-projet">Formation</span>
+          <span class="theme-hours">4h validées</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <div class="activity-block">
+          <div class="info-grid">
+            <div class="info-item"><span>Plateforme</span><strong>Kaggle Learn</strong></div>
+            <div class="info-item"><span>Date d'obtention</span><strong>10 mai 2026</strong></div>
+            <div class="info-item"><span>Certificat</span><strong>Python</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">4h</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> J'ai suivi le cours Python de Kaggle Learn pour consolider mes bases et valider ma maîtrise du langage. Cette remise à niveau couvre les fondamentaux de Python, les structures de données, les fonctions et les bibliothèques essentielles.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Syntaxe Python moderne, manipulation de données avec pandas, visualisation, bonnes pratiques de codage.</p>
+          </div>
+
+          <a href="https://www.kaggle.com/learn/python" target="_blank" class="proof-link">Kaggle Learn — Python</a>
+
+          <div class="reflexive-section" style="margin-top:1rem;">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Pourquoi ce cours.</strong> Bien que j'utilise Python quotidiennement dans mes projets d'IA et de cybersécurité, je n'avais jamais suivi de formation structurée couvrant l'intégralité du langage. Ce cours m'a permis de combler des lacunes subtiles — notamment sur les compréhensions de liste avancées, l'utilisation optimale des décorateurs, et certaines subtilités du module <code>collections</code>. La certification atteste d'un socle Python solide, utile pour les recruteurs qui recherchent une preuve formelle de compétence.
+            </p>
+            <p>
+              <strong>Ce que j'en retire concrètement.</strong> Le cours m'a forcé à adopter des conventions de codage plus rigoureuses (PEP 8) que j'applique maintenant à mes nouveaux projets. Il m'a aussi donné l'occasion de pratiquer la manipulation de données avec pandas sur des datasets Kaggle, ce qui est directement transférable à mes projets de machine learning.
+            </p>
+          </div>
+
+          <div id="gallery-kaggle" class="image-gallery" style="margin-top:1.25rem;">
+            <img src="cert.png" alt="Certificat Kaggle Python" />
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /themes-grid -->
 </section>
 
@@ -1142,18 +1180,18 @@ footer a { color: var(--accent); text-decoration: none; }
         <p style="font-size:13px; color:var(--text2);">Génération d'idées par chaînes de Markov.</p>
       </div>
     </a>
-    <a href="https://github.com/TheReturnedABought/Text-Adventure" target="_blank" style="text-decoration:none;">
-      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
-        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">Game · Data-driven · JSON</p>
-        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">Text Adventure Game</p>
-        <p style="font-size:13px; color:var(--text2);">Jeu d'aventure textuel avec parseur et combat, entièrement piloté par JSON.</p>
-      </div>
-    </a>
     <a href="https://github.com/TheReturnedABought/Markov-Password-Predictor" target="_blank" style="text-decoration:none;">
       <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
         <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">Sécurité · Markov</p>
         <p style="font-weight:500; color:var(--text); margin-bottom:6px;">Markov Password Predictor</p>
         <p style="font-size:13px; color:var(--text2);">Prédicteur de mots de passe par modèle probabiliste.</p>
+      </div>
+    </a>
+    <a href="https://github.com/TheReturnedABought/Text-Adventure" target="_blank" style="text-decoration:none;">
+      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
+        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">Game · Data-driven · JSON</p>
+        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">Text Adventure Game</p>
+        <p style="font-size:13px; color:var(--text2);">Jeu d'aventure textuel avec parseur et combat, entièrement piloté par JSON.</p>
       </div>
     </a>
     <a href="https://github.com/TheReturnedABought/llmtraining" target="_blank" style="text-decoration:none;">
@@ -1213,51 +1251,22 @@ footer a { color: var(--accent); text-decoration: none; }
    IMAGE CONFIGURATION
    Add image paths (relative to index.html) for each activity.
    You can add as many images as you want per gallery.
-   Leave arrays empty [] to show nothing.
+   All galleries now contain at least one placeholder image.
    ═══════════════════════════════════════════════════════════════ */
 const PORTFOLIO_IMAGES = {
-  hackathon2024:  [
-    // 'images/hackathon2024_1.svg',
-    // 'images/hackathon2024_2.svg',
-  ],
-  hackathon2025:  [
-    // 'images/hackathon2025_1.svg',
-    // 'images/hackathon2025_2.svg',
-  ],
-  sinwave:        [
-    // 'images/sinwave_output.svg',
-  ],
-  aitrader:       [
-    // 'images/trader_signals.svg',
-  ],
-  nnvisualiser:   [
-    'images/nnvisualiser_demo.svg',
-    'images/nnvisualiser_repo.svg',
-  ],
-  pipeline:       [
-    // 'images/pipeline_loss.svg',
-  ],
-  markov:         [
-    // 'images/markov_output.svg',
-    // 'images/markov_password.svg',
-  ],
-  textadv:        [
-    // 'images/textadv_screenshot.svg',
-  ],
-  ctf:            [
-    // 'images/ctf_scoreboard.svg',
-    // 'images/ctf_challenges.svg',
-  ],
-  azure:          [
-    // 'images/azure_attestation.svg',
-  ],
-  musee:          [
-    // 'images/musee_badge.svg',
-  ],
-  swift:          [
-    // 'images/swift_badge.svg',
-    // 'images/swift_excel.svg',
-  ],
+  hackathon2024:  ['images/placeholder.svg'],
+  hackathon2025:  ['images/placeholder.svg'],
+  sinwave:        ['images/placeholder.svg'],
+  aitrader:       ['images/placeholder.svg'],
+  nnvisualiser:   ['images/nnvisualiser_demo.svg', 'images/nnvisualiser_repo.svg'],
+  pipeline:       ['images/placeholder.svg'],
+  markov:         ['images/placeholder.svg'],
+  textadv:        ['images/placeholder.svg'],
+  ctf:            ['images/placeholder.svg', 'images/placeholder.svg'],
+  azure:          ['images/placeholder.svg'],
+  musee:          ['images/placeholder.svg'],
+  swift:          ['images/placeholder.svg', 'images/placeholder.svg'],
+  kaggle:         ['cert.png'],  // certificate image added
 };
 
 /* ── Render galleries ── */
@@ -1265,7 +1274,7 @@ function renderGalleries() {
   Object.entries(PORTFOLIO_IMAGES).forEach(([key, paths]) => {
     const el = document.getElementById('gallery-' + key);
     if (!el) return;
-    if (!paths || paths.length === 0) return; // hide if empty
+    if (!paths || paths.length === 0) return;
     paths.forEach(src => {
       const img = document.createElement('img');
       img.src = src;
