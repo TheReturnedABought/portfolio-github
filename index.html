@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thomas Girboux — Portfolio EPHEC 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #1f2937;
+  --accent: #f0a500;
+  --accent2: #ffd166;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --border: #30363d;
+  --green: #39d353;
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 60px;
+}
+.nav-logo {
+  font-family: var(--mono); font-size: 14px; color: var(--accent);
+  text-decoration: none; letter-spacing: 0.05em;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--text2); text-decoration: none; font-size: 13px;
+  font-family: var(--mono); letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 100px 2rem 4rem;
+  max-width: 960px; margin: 0 auto;
+  position: relative;
+}
+.hero-content { flex: 1; }
+.hero-tag {
+  font-family: var(--mono); font-size: 13px; color: var(--accent);
+  letter-spacing: 0.1em; margin-bottom: 1rem;
+}
+.hero-name {
+  font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 600; line-height: 1.05;
+  color: var(--text); margin-bottom: 1rem;
+}
+.hero-name span { color: var(--accent); font-style: italic; }
+.hero-sub {
+  font-size: 1.15rem; color: var(--text2); max-width: 520px;
+  margin-bottom: 2rem; font-weight: 300;
+}
+.hero-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.badge {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 4px 14px; font-family: var(--mono); font-size: 12px;
+  color: var(--text2); background: var(--bg2);
+}
+.badge.accent { border-color: var(--accent); color: var(--accent); }
+.btn {
+  display: inline-block; padding: 12px 28px;
+  background: var(--accent); color: #000;
+  font-weight: 500; text-decoration: none; border-radius: 6px;
+  font-size: 14px; transition: background 0.2s, transform 0.1s;
+  margin-right: 1rem; margin-bottom: 0.5rem;
+}
+.btn:hover { background: var(--accent2); transform: translateY(-1px); }
+.btn.outline {
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn.outline:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
+.hero-photo {
+  width: 280px; height: 280px; border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  border: 3px solid var(--accent);
+  margin-left: 4rem; flex-shrink: 0;
+  filter: grayscale(20%);
+}
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 12px; color: var(--text2);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.hero-scroll::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  display: block;
+}
+
+/* SECTIONS */
+section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
+.section-label {
+  font-family: var(--mono); font-size: 12px; color: var(--accent);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem;
+}
+.section-title {
+  font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--text); margin-bottom: 2rem; line-height: 1.1;
+}
+.divider {
+  width: 60px; height: 2px; background: var(--accent); margin-bottom: 3rem;
+}
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.about-text p { color: var(--text2); margin-bottom: 1.2rem; line-height: 1.8; }
+.about-text p strong { color: var(--text); font-weight: 500; }
+.skills-list { list-style: none; }
+.skills-list li {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-family: var(--mono); font-size: 13px; color: var(--text2);
+}
+.skills-list li::before { content: '▸'; color: var(--accent); font-size: 11px; }
+.cv-card {
+  margin-top: 2rem;
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 1.5rem; background: var(--bg2);
+  display: flex; align-items: center; gap: 1rem;
+}
+.cv-icon {
+  width: 48px; height: 48px; background: var(--accent);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+
+/* PROJET PRO */
+.projet-box {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+  padding: 2rem; margin-bottom: 2rem;
+}
+.projet-box h3 {
+  font-family: var(--serif); font-size: 1.4rem; margin-bottom: 1rem; color: var(--text);
+}
+.projet-box p { color: var(--text2); line-height: 1.8; }
+
+/* FORCES/FAIBLESSES */
+.ff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.ff-card {
+  border-radius: 10px; padding: 1.5rem; border: 1px solid;
+}
+.ff-card.force {
+  background: rgba(57, 211, 83, 0.05);
+  border-color: rgba(57, 211, 83, 0.3);
+}
+.ff-card.faiblesse {
+  background: rgba(240, 165, 0, 0.05);
+  border-color: rgba(240, 165, 0, 0.3);
+}
+.ff-card h4 {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 1rem;
+}
+.ff-card.force h4 { color: var(--green); }
+.ff-card.faiblesse h4 { color: var(--accent); }
+.ff-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 0.75rem; font-size: 14px; color: var(--text2);
+}
+.ff-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px;
+}
+.force .ff-dot { background: var(--green); }
+.faiblesse .ff-dot { background: var(--accent); }
+
+/* ACTIVITES */
+.synthese-box {
+  background: var(--bg2); border-left: 3px solid var(--accent);
+  padding: 1.5rem 2rem; border-radius: 0 8px 8px 0; margin-bottom: 3rem;
+}
+.synthese-box p { color: var(--text2); line-height: 1.8; }
+.themes-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+.theme-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+.theme-header {
+  padding: 1.5rem; cursor: pointer; display: flex;
+  align-items: center; justify-content: space-between;
+  gap: 1rem; transition: background 0.2s; user-select: none;
+}
+.theme-header:hover { background: var(--bg3); }
+.theme-header-left { display: flex; align-items: center; gap: 1rem; flex: 1; }
+.theme-number {
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  background: rgba(240,165,0,0.1); border: 1px solid rgba(240,165,0,0.3);
+  border-radius: 4px; padding: 2px 8px; white-space: nowrap;
+}
+.theme-title-text {
+  font-family: var(--serif); font-size: 1.2rem; color: var(--text);
+}
+.theme-meta {
+  display: flex; gap: 0.75rem; align-items: center; flex-shrink: 0;
+}
+.theme-hours {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text2); white-space: nowrap;
+}
+.theme-chevron {
+  color: var(--text2); transition: transform 0.3s; font-size: 18px;
+}
+.theme-header.open .theme-chevron { transform: rotate(180deg); }
+.theme-body {
+  display: none; border-top: 1px solid var(--border); padding: 2rem;
+}
+.theme-body.open { display: block; }
+.activity-label {
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;
+}
+.activity-title {
+  font-size: 1.05rem; font-weight: 500; color: var(--text); margin-bottom: 1rem;
+}
+.activity-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.activity-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.info-item { background: var(--bg3); border-radius: 6px; padding: 10px 14px; }
+.info-item span { display: block; font-family: var(--mono); font-size: 11px; color: var(--text2); margin-bottom: 3px; }
+.info-item strong { font-size: 13px; color: var(--text); font-weight: 500; }
+.body-text { color: var(--text2); line-height: 1.8; margin-bottom: 1rem; }
+.body-text p { margin-bottom: 0.8rem; }
+.reflexive-placeholder {
+  background: rgba(240,165,0,0.06); border: 1px dashed rgba(240,165,0,0.4);
+  border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem;
+}
+.reflexive-placeholder .ph-label {
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.08em; margin-bottom: 0.5rem;
+}
+.reflexive-placeholder p { color: var(--text2); font-size: 14px; }
+.proof-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 14px;
+  color: var(--text2); text-decoration: none; font-family: var(--mono);
+  font-size: 12px; transition: border-color 0.2s, color 0.2s; margin-top: 0.5rem; margin-right: 0.5rem;
+}
+.proof-link:hover { border-color: var(--accent); color: var(--accent); }
+.proof-link::before { content: '🔗'; font-size: 12px; }
+.gh-link::before { content: '⌥'; }
+.type-badge {
+  display: inline-block; font-family: var(--mono); font-size: 11px;
+  padding: 2px 10px; border-radius: 12px; margin-bottom: 0.5rem;
+  border: 1px solid;
+}
+.type-hackathon { color: #a78bfa; border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08); }
+.type-projet { color: #60a5fa; border-color: rgba(96,165,250,0.4); background: rgba(96,165,250,0.08); }
+.type-conference { color: #34d399; border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.08); }
+.type-challenge { color: #f87171; border-color: rgba(248,113,113,0.4); background: rgba(248,113,113,0.08); }
+.type-experience { color: var(--accent); border-color: rgba(240,165,0,0.4); background: rgba(240,165,0,0.08); }
+
+/* CTF STATS */
+.ctf-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.ctf-stat { background: var(--bg3); border-radius: 8px; padding: 1rem; text-align: center; }
+.ctf-stat .val { font-family: var(--mono); font-size: 1.5rem; color: var(--accent); font-weight: 500; }
+.ctf-stat .lbl { font-size: 12px; color: var(--text2); margin-top: 4px; }
+.challenge-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 1rem; }
+.challenge-table th { text-align: left; padding: 8px 12px; color: var(--text2); font-family: var(--mono); font-size: 11px; border-bottom: 1px solid var(--border); font-weight: 400; }
+.challenge-table td { padding: 8px 12px; border-bottom: 1px solid rgba(48,54,61,0.5); color: var(--text2); }
+.challenge-table td:first-child { color: var(--text); }
+.cat-crypto { color: #a78bfa; }
+.cat-rev { color: #60a5fa; }
+.cat-forensics { color: #34d399; }
+.cat-intro { color: var(--text2); }
+
+/* TIMELINE (CV section) */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 1px; background: var(--border);
+}
+.tl-item { position: relative; margin-bottom: 2rem; }
+.tl-dot {
+  position: absolute; left: -2rem; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--bg);
+  transform: translateX(-4px);
+}
+.tl-date { font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 4px; }
+.tl-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.tl-sub { font-size: 13px; color: var(--text2); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border); padding: 2rem;
+  text-align: center; color: var(--text2); font-family: var(--mono); font-size: 13px;
+}
+footer a { color: var(--accent); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .hero { flex-direction: column-reverse; text-align: center; padding-top: 80px; }
+  .hero-photo { width: 180px; height: 180px; margin-left: 0; margin-bottom: 2rem; }
+  .hero-badges { justify-content: center; }
+  .about-grid, .ff-grid { grid-template-columns: 1fr; }
+  .ctf-stats { grid-template-columns: repeat(2, 1fr); }
+  nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#" class="nav-logo">TG.portfolio</a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#projet">Projet</a></li>
+    <li><a href="#forces">Forces</a></li>
+    <li><a href="#activites">Activités</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <p class="hero-tag">// portfolio EPHEC · Technologies de l'Informatique</p>
+    <h1 class="hero-name">Thomas<br /><span>Girboux</span></h1>
+    <p class="hero-sub">
+      Étudiant en informatique · Passionné d'IA, de cybersécurité et de développement.
+      Bilingue FR/EN. Curieux, autonome, prêt à apprendre.
+    </p>
+    <div class="hero-badges">
+      <span class="badge accent">Intelligence Artificielle</span>
+      <span class="badge">Cybersécurité</span>
+      <span class="badge">Web & BDD</span>
+      <span class="badge">Réseaux</span>
+      <span class="badge">FR / EN</span>
+    </div>
+    <a href="ThomasGirbouxcv_Eng.pdf" download class="btn">📄 Télécharger le CV</a>
+    <a href="#activites" class="btn outline">Voir mes activités ↓</a>
+  </div>
+  <!-- Remplace src par ton chemin de photo -->
+  <img src="photo.jpg" alt="Thomas Girboux" class="hero-photo"
+       onerror="this.style.display='none'" />
+  <div class="hero-scroll">scroll</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">// 01 · à propos</p>
+  <h2 class="section-title">Qui suis-je ?</h2>
+  <div class="divider"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Je m'appelle <strong>Thomas Girboux</strong>, j'ai 21 ans et je suis actuellement étudiant
+        en <strong>bachelier en informatique</strong> à l'EPHEC, avec un focus sur le développement
+        web, les bases de données et les réseaux.
+      </p>
+      <p>
+        Diplômé de l'Institut du Sacré-Cœur de Nivelles (CESS – Sciences appliquées), j'ai grandi
+        entre la Belgique et les États-Unis, ce qui m'a permis de développer un bilinguisme naturel
+        français/anglais. J'ai également des notions de néerlandais.
+      </p>
+      <p>
+        En dehors des cours, je me consacre à des <strong>projets personnels en intelligence
+        artificielle</strong>, à des challenges de cybersécurité (CTF) et à des hackathons. 
+        Je crois que c'est en construisant qu'on apprend vraiment.
+      </p>
+      <div class="cv-card">
+        <div class="cv-icon">📋</div>
+        <div>
+          <strong style="display:block; margin-bottom:4px;">Curriculum Vitae</strong>
+          <span style="color:var(--text2); font-size:13px;">Anglais · Formation, expériences, compétences</span><br/>
+          <a href="ThomasGirbouxcv_Eng.pdf" download class="btn" style="margin-top:0.75rem; padding:8px 18px; font-size:13px;">Télécharger</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p style="color:var(--text2); font-size:13px; font-family:var(--mono); margin-bottom:1rem;">// compétences techniques</p>
+      <ul class="skills-list">
+        <li>Développement web (HTML, CSS, JavaScript)</li>
+        <li>Bases de données (SQL)</li>
+        <li>Réseaux & infrastructure</li>
+        <li>Intelligence artificielle & ML (Python)</li>
+        <li>Cybersécurité — CTF (Crypto, Forensics, RE)</li>
+        <li>Algorithmique avancée</li>
+        <li>Automatisation Excel (VBA / Macros)</li>
+        <li>Git & GitHub</li>
+        <li>Outils bureautiques (suite M365)</li>
+      </ul>
+      <p style="color:var(--text2); font-size:13px; font-family:var(--mono); margin: 1.5rem 0 1rem;">// langues</p>
+      <ul class="skills-list">
+        <li>Français — langue maternelle</li>
+        <li>Anglais — langue maternelle (bilinguisme)</li>
+        <li>Néerlandais — notions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJET PROFESSIONNEL -->
+<section id="projet">
+  <p class="section-label">// 02 · projet professionnel</p>
+  <h2 class="section-title">Mon projet professionnel</h2>
+  <div class="divider"></div>
+  <div class="projet-box">
+    <h3>Développeur spécialisé en IA &amp; Sécurité</h3>
+    <p>
+      Mon ambition professionnelle est de devenir <strong style="color:var(--text)">développeur logiciel spécialisé en intelligence artificielle et en cybersécurité</strong>. 
+      Ces deux domaines me passionnent profondément, et je souhaite construire des systèmes à la fois intelligents et sécurisés — deux dimensions de plus en plus indissociables dans le secteur IT actuel.
+    </p>
+    <br/>
+    <p>
+      À court terme, je cherche à consolider mes bases techniques en développement (web, APIs, algorithmes) tout en approfondissant 
+      mes connaissances en machine learning et en sécurité des systèmes. 
+      À moyen terme, je vise une carrière dans une entreprise tech innovante, idéalement dans les domaines de la fintech, 
+      de la cybersécurité ou de l'IA appliquée.
+    </p>
+    <br/>
+    <p style="color:var(--text2)">
+      <em style="font-family:var(--serif)">
+        [À compléter : développe ton projet professionnel plus en détail — 
+        pourquoi ce domaine, quels types d'entreprises visent-ils, quelle vision à 5 ans ?]
+      </em>
+    </p>
+  </div>
+</section>
+
+<!-- FORCES & FAIBLESSES -->
+<section id="forces">
+  <p class="section-label">// 03 · bilan personnel</p>
+  <h2 class="section-title">Forces &amp; Axes d'amélioration</h2>
+  <div class="divider"></div>
+  <div class="ff-grid">
+    <div class="ff-card force">
+      <h4>✦ Forces</h4>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Autonomie &amp; curiosité</strong> — Je me lance dans des projets perso complexes (IA, algorithmes) sans filet, par passion d'apprendre.</span></div>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Bilinguisme FR/EN</strong> — Communication naturelle dans les deux langues, y compris face aux clients et dans des contextes professionnels.</span></div>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Adaptabilité</strong> — À l'aise dans des environnements variés : musée, fast-food, institution financière, compétitions de hacking…</span></div>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Pensée algorithmique</strong> — Je décompose naturellement les problèmes en étapes logiques et testables.</span></div>
+    </div>
+    <div class="ff-card faiblesse">
+      <h4>⚠ Axes d'amélioration</h4>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Organisation du code</strong> — Tendance à écrire du code fonctionnel mais non structuré (comme reflété par le projet AI Sine Wave). À améliorer.</span></div>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Infrastructure Cloud</strong> — Encore peu d'expérience pratique sur AWS/Azure au-delà d'une conférence introductive.</span></div>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Documentation</strong> — Mes projets manquent parfois de README et de commentaires clairs.</span></div>
+      <div class="ff-item"><span class="ff-dot"></span><span><strong style="color:var(--text)">Néerlandais</strong> — Lacune dans un contexte belge professionnel, à travailler sur le long terme.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITES -->
+<section id="activites">
+  <p class="section-label">// 04 · activités d'acquisition de compétences</p>
+  <h2 class="section-title">Mes activités</h2>
+  <div class="divider"></div>
+
+  <div class="synthese-box">
+    <p>
+      Au cours de cette année académique, j'ai cherché à diversifier au maximum mes modes d'apprentissage 
+      — projets personnels, hackathons, conférences, expériences professionnelles et challenges compétitifs. 
+      Cette démarche m'a permis de tester mes compétences dans des contextes concrets et variés, souvent 
+      sous pression ou avec des contraintes réelles. 
+      Les 7 thèmes ci-dessous regroupent mes activités par domaine de compétence.
+    </p>
+    <br/>
+    <p style="color:var(--text2); font-size:14px; font-style:italic;">
+      [À compléter : enrichis cette synthèse générale avec tes propres mots — 
+      quels ont été les moments les plus marquants, les apprentissages les plus inattendus ?]
+    </p>
+  </div>
+
+  <div class="themes-grid">
+
+    <!-- THEME 1 : HACKATHON 2023 -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 1</span>
+          <span class="theme-title-text">Hackathon 2023</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-hackathon">Hackathon</span>
+          <span class="theme-hours">10h</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <div class="activity-block">
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Hackathon présentiel</strong></div>
+            <div class="info-item"><span>Durée</span><strong>10 heures</strong></div>
+            <div class="info-item"><span>Date</span><strong>[À compléter]</strong></div>
+            <div class="info-item"><span>Lieu</span><strong>[À compléter]</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> [Décris le hackathon : qui l'organisait, quel était le thème/défi, avec qui tu as participé.]</p>
+          </div>
+          <div class="reflexive-placeholder">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Utilise la première personne. Décris : (1) le contexte de l'événement, (2) ce que tu as concrètement appris (technique + soft skills), (3) en quoi cette expérience nourrit ton projet professionnel, (4) les liens avec tes forces ou faiblesses identifiées.</p>
+          </div>
+          <div style="margin-top:1rem;">
+            <a href="#" class="proof-link">[Preuve de participation — à ajouter]</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEME 2 : HACKATHON 2024 -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 2</span>
+          <span class="theme-title-text">Hackathon 2024</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-hackathon">Hackathon</span>
+          <span class="theme-hours">10h</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <div class="activity-block">
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Hackathon présentiel</strong></div>
+            <div class="info-item"><span>Durée</span><strong>10 heures</strong></div>
+            <div class="info-item"><span>Date</span><strong>[À compléter]</strong></div>
+            <div class="info-item"><span>Lieu</span><strong>[À compléter]</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> [Décris le hackathon 2024 : organisateur, thème, équipe, résultat.]</p>
+          </div>
+          <div class="reflexive-placeholder">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Compare avec le hackathon 2023 si pertinent. Qu'as-tu fait différemment ? Quelles compétences nouvelles as-tu mobilisées ? Quels liens avec ton projet professionnel ?</p>
+          </div>
+          <div style="margin-top:1rem;">
+            <a href="#" class="proof-link">[Preuve de participation — à ajouter]</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEME 3 : IA & MACHINE LEARNING -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 3</span>
+          <span class="theme-title-text">Intelligence Artificielle &amp; Machine Learning</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-projet">Projets</span>
+          <span class="theme-hours">10h</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+
+        <!-- 3a: Sine Wave -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 3a</p>
+          <p class="activity-title">AI Sine Wave Approximator — Comment fonctionnent les réseaux de neurones</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
+            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
+            <div class="info-item"><span>Langage</span><strong>Python</strong></div>
+            <div class="info-item"><span>Dépôt</span><strong>GitHub public</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Dans ce projet, j'ai construit un réseau de neurones (sans bibliothèque d'abstraction) capable d'approximer une fonction sinusoïdale. La base de code est volontairement non structurée — ce qui m'a amené à comprendre les mécanismes de bas niveau avant d'adopter de bonnes pratiques.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Fonctionnement d'un réseau de neurones (forward pass, backpropagation, fonctions d'activation), initiation au gradient descent, importance de la qualité du code.</p>
+          </div>
+          <a href="https://github.com/TheReturnedABought/AI_Sine_Wave_Approximator" target="_blank" class="proof-link gh-link">GitHub — AI_Sine_Wave_Approximator</a>
+          <div class="reflexive-placeholder" style="margin-top:1rem;">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Explique en quoi ce projet t'a appris les bases des NNs. Qu'est-ce que le code "messy" t'a enseigné ? Comment cela relie-il ta faiblesse en organisation du code à ton apprentissage ?</p>
+          </div>
+        </div>
+
+        <!-- 3b: AI Trader -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 3b</p>
+          <p class="activity-title">AI Trader — Modèle de signaux financiers par ML</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
+            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
+            <div class="info-item"><span>Domaine</span><strong>IA + Finance</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'un modèle IA qui prend en entrée des paramètres financiers quantitatifs et génère des signaux d'achat/vente. Ce projet m'a initié aux bases de l'analyse quantitative.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Outils de base de l'analyse quantitative (indicateurs techniques, normalisation), pipeline de données, évaluation d'un modèle ML sur des données temporelles.</p>
+          </div>
+          <div class="reflexive-placeholder">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Décris le modèle construit, les difficultés rencontrées et les apprentissages. En quoi ce projet te prépare-t-il à ton projet pro (IA appliquée / fintech) ?</p>
+          </div>
+        </div>
+
+        <!-- 3c: Training pipeline -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 3c</p>
+          <p class="activity-title">AI Training Pipeline — Appliquer des papiers de recherche</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
+            <div class="info-item"><span>Durée</span><strong>2 heures</strong></div>
+            <div class="info-item"><span>Dépôt</span><strong>GitHub public</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Construction d'un pipeline d'entraînement complet pour un modèle IA, en m'appuyant directement sur des articles de recherche académiques.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Comment lire et implémenter une publication scientifique, structurer un projet ML (data loading, training loop, validation, sauvegarde).</p>
+          </div>
+          <a href="https://github.com/TheReturnedABought/llmtraining" target="_blank" class="proof-link gh-link">GitHub — llmtraining</a>
+          <div class="reflexive-placeholder" style="margin-top:1rem;">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Quel(s) paper(s) as-tu lu ? Quelles difficultés de compréhension as-tu rencontrées ? Qu'as-tu retenu de la démarche scientifique ? Lien avec ton projet pro.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- THEME 4 : ALGORITHMIQUE -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 4</span>
+          <span class="theme-title-text">Algorithmique &amp; Développement Logiciel</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-projet">Projets</span>
+          <span class="theme-hours">8h</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+
+        <!-- 4a: Idea Generator -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 4a</p>
+          <p class="activity-title">Idea Generator — Chaînes de Markov</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
+            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
+            <div class="info-item"><span>Concept</span><strong>Chaînes de Markov</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'une application qui génère des idées de projets à l'aide de chaînes de Markov — un modèle probabiliste de génération de texte basé sur les transitions entre états.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Théorie et implémentation des chaînes de Markov, génération de texte statistique, différences avec les approches deep learning (LLMs).</p>
+          </div>
+          <a href="https://github.com/TheReturnedABought/Idea-Generator" target="_blank" class="proof-link gh-link">GitHub — Idea-Generator</a>
+          <a href="https://github.com/TheReturnedABought/Markov-Password-Predictor" target="_blank" class="proof-link gh-link">GitHub — Markov-Password-Predictor</a>
+          <div class="reflexive-placeholder" style="margin-top:1rem;">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Explique ce qu'est une chaîne de Markov, comment tu l'as implémentée, et ce que ce modèle t'a appris sur la génération probabiliste de texte. Comparaison avec les LLMs modernes ?</p>
+          </div>
+        </div>
+
+        <!-- 4b: Text Adventure -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 4b</p>
+          <p class="activity-title">Text Adventure Game — Architecture orientée données</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
+            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
+            <div class="info-item"><span>Tech</span><strong>JSON / Data-driven</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'un jeu d'aventure textuel entièrement piloté par des données JSON, avec un parseur de variables et un système de combat. L'objectif était de séparer strictement la logique du contenu pour faciliter l'expansion.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Architecture data-driven, parsing de commandes textuelles, conception de systèmes modulaires et extensibles, importance de la séparation données/logique.</p>
+          </div>
+          <a href="https://github.com/TheReturnedABought/Text-Adventure" target="_blank" class="proof-link gh-link">GitHub — Text-Adventure</a>
+          <div class="reflexive-placeholder" style="margin-top:1rem;">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Décris l'architecture du jeu : comment fonctionne le parseur ? Pourquoi avoir choisi JSON pour les données ? Quels défis de conception as-tu rencontrés ? Qu'as-tu appris sur le design de systèmes extensibles ?</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- THEME 5 : CYBERSECURITE -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 5</span>
+          <span class="theme-title-text">Cybersécurité — Cyber Security Challenge Belgium</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-challenge">Challenge</span>
+          <span class="theme-hours">10h</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <div class="activity-block">
+          <div class="info-grid">
+            <div class="info-item"><span>Événement</span><strong>CSC Belgium — Qualifiers</strong></div>
+            <div class="info-item"><span>Format</span><strong>CTF (Capture The Flag)</strong></div>
+            <div class="info-item"><span>Classement</span><strong>343e / tous</strong></div>
+            <div class="info-item"><span>Score</span><strong>1144 points</strong></div>
+          </div>
+          <div class="ctf-stats">
+            <div class="ctf-stat"><div class="val">343</div><div class="lbl">Classement</div></div>
+            <div class="ctf-stat"><div class="val">1144</div><div class="lbl">Points</div></div>
+            <div class="ctf-stat"><div class="val">8</div><div class="lbl">Challenges résolus</div></div>
+            <div class="ctf-stat"><div class="val">4</div><div class="lbl">Catégories</div></div>
+          </div>
+          <table class="challenge-table">
+            <thead>
+              <tr><th>Challenge</th><th>Catégorie</th><th>Points</th><th>Date</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Bill's Gates</td><td class="cat-crypto">Cryptography</td><td>464</td><td>Feb 28, 1:36 PM</td></tr>
+              <tr><td>Time Capsule</td><td class="cat-crypto">Cryptography</td><td>214</td><td>Feb 27, 5:56 PM</td></tr>
+              <tr><td>Neon Nights</td><td class="cat-rev">Reverse Engineering</td><td>142</td><td>Feb 28, 2:40 AM</td></tr>
+              <tr><td>D3? Brew</td><td class="cat-rev">Reverse Engineering</td><td>124</td><td>Feb 28, 2:41 AM</td></tr>
+              <tr><td>Is This a Rainbow?</td><td class="cat-forensics">Forensics</td><td>50</td><td>Feb 28, 2:17 AM</td></tr>
+              <tr><td>Catch of the Day</td><td class="cat-forensics">Forensics</td><td>50</td><td>Feb 28, 1:04 AM</td></tr>
+              <tr><td>Snapshots</td><td class="cat-forensics">Forensics</td><td>50</td><td>Feb 27, 10:42 PM</td></tr>
+              <tr><td>Welcome to the Qualifiers!</td><td class="cat-intro">Intro</td><td>50</td><td>Feb 27, 5:51 PM</td></tr>
+            </tbody>
+          </table>
+          <a href="https://ctf.cybersecuritychallenge.be/challenges" target="_blank" class="proof-link" style="margin-top:1.5rem;">ctf.cybersecuritychallenge.be</a>
+          <div class="reflexive-placeholder" style="margin-top:1rem;">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Décris ton expérience du CTF : comment t'es-tu préparé, quels challenges t'ont le plus appris (cryptographie, reverse engineering, forensics), quelles techniques as-tu découvertes ? Qu'est-ce que ça t'a révélé sur la cybersécurité en tant que domaine ? Lien avec ton projet professionnel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEME 6 : CLOUD & INFRASTRUCTURE -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 6</span>
+          <span class="theme-title-text">Cloud &amp; Infrastructure — Conférence Azure / M365</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-conference">Conférence</span>
+          <span class="theme-hours">2h</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <div class="activity-block">
+          <div class="info-grid">
+            <div class="info-item"><span>Titre</span><strong>Cloud avec M365 et Azure Infrastructure</strong></div>
+            <div class="info-item"><span>Date</span><strong>3 novembre 2025</strong></div>
+            <div class="info-item"><span>Durée</span><strong>2 heures</strong></div>
+            <div class="info-item"><span>Intervenant</span><strong>Kevin Keurvels — Axentys</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Conférence organisée par l'EPHEC, animée par Kevin Keurvels de la société <em>Axentys</em> (Services et support informatiques pour professionnels). La session d'environ 2 heures portait sur les services cloud Microsoft — Azure et Microsoft 365 — dans un contexte professionnel.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Vue d'ensemble de l'écosystème Azure, intégration de M365 dans une infrastructure d'entreprise, concepts clés du cloud (IaaS, PaaS, SaaS) dans un contexte concret.</p>
+          </div>
+          <div style="margin: 1rem 0; padding: 1rem; background: var(--bg3); border-radius: 8px; font-size: 13px; color: var(--text2);">
+            <strong style="color:var(--text);">📧 Preuve de participation :</strong><br/>
+            Attestation nominative reçue par email de Marie-Noël Vroman (EPHEC) le 3 novembre 2025.
+          </div>
+          <div class="reflexive-placeholder">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Qu'as-tu appris sur le cloud Microsoft ? En quoi Azure diffère-t-il des alternatives (AWS, GCP) ? Comment cette introduction répond-elle à ta faiblesse identifiée en Cloud/Infrastructure ? Quelles pistes de formation complémentaires envisages-tu ?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEME 7 : EXPERIENCE PRO / SOFT SKILLS -->
+    <div class="theme-card">
+      <div class="theme-header" onclick="toggle(this)">
+        <div class="theme-header-left">
+          <span class="theme-number">Thème 7</span>
+          <span class="theme-title-text">Expérience Professionnelle &amp; Soft Skills</span>
+        </div>
+        <div class="theme-meta">
+          <span class="type-badge type-experience">Expérience</span>
+          <span class="theme-hours">10h</span>
+          <span class="theme-chevron">▾</span>
+        </div>
+      </div>
+      <div class="theme-body">
+
+        <!-- 7a: Dernier QG -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 7a</p>
+          <p class="activity-title">Gestion de clients bilingue — Dernier QG de Napoléon</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Job étudiant</strong></div>
+            <div class="info-item"><span>Période</span><strong>Nov. 2023 – Avr. 2025</strong></div>
+            <div class="info-item"><span>Durée</span><strong>10 heures (portfolio)</strong></div>
+            <div class="info-item"><span>Langues</span><strong>FR / EN</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Poste d'accueil étudiant dans un musée historique à fréquentation touristique internationale. Responsabilités : accueil bilingue (FR/EN), gestion des paiements et surveillance des espaces.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Communication professionnelle en contexte multiculturel, gestion des situations délicates avec les visiteurs, fiabilité et ponctualité en milieu de travail réel.</p>
+          </div>
+          <div class="reflexive-placeholder">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Quelles situations concrètes as-tu gérées ? Comment ce poste a-t-il renforcé tes soft skills (communication, gestion du stress, adaptabilité) ? Quels liens avec tes compétences professionnelles futures ?</p>
+          </div>
+        </div>
+
+        <!-- 7b: SWIFT -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 7b</p>
+          <p class="activity-title">Job d'été chez SWIFT — Automatisation Excel &amp; Macros</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Job d'été</strong></div>
+            <div class="info-item"><span>Entreprise</span><strong>SWIFT (institution financière)</strong></div>
+            <div class="info-item"><span>Durée</span><strong>Validé (0h EPHEC)</strong></div>
+            <div class="info-item"><span>Tech</span><strong>Excel / VBA / Macros</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Stage/job d'été au sein de SWIFT, acteur central de l'infrastructure financière mondiale. J'ai appliqué des macros Excel avancées pour automatiser des tâches de traitement de données.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> VBA et automatisation Excel en contexte professionnel réel, compréhension du fonctionnement d'une grande institution financière, rigueur et précision requises dans le secteur financier.</p>
+          </div>
+          <div class="reflexive-placeholder">
+            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
+            <p>Quelles tâches as-tu automatisées ? Quelles macros as-tu développées ? En quoi ce passage chez SWIFT a-t-il changé ta vision de l'automatisation et de l'informatique en milieu bancaire ? Lien avec ton projet professionnel (fintech/quantitative) ?</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /themes-grid -->
+</section>
+
+<!-- GITHUB PROJECTS -->
+<section id="github">
+  <p class="section-label">// 05 · projets GitHub</p>
+  <h2 class="section-title">Dépôts publics</h2>
+  <div class="divider"></div>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+    <a href="https://github.com/TheReturnedABought/AI_Sine_Wave_Approximator" target="_blank" style="text-decoration:none;">
+      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
+        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">IA · Python</p>
+        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">AI Sine Wave Approximator</p>
+        <p style="font-size:13px; color:var(--text2);">Réseau de neurones from scratch pour approximer une sinusoïde.</p>
+      </div>
+    </a>
+    <a href="https://github.com/TheReturnedABought/Idea-Generator" target="_blank" style="text-decoration:none;">
+      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
+        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">Algorithme · Markov</p>
+        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">Idea Generator</p>
+        <p style="font-size:13px; color:var(--text2);">Génération d'idées par chaînes de Markov.</p>
+      </div>
+    </a>
+    <a href="https://github.com/TheReturnedABought/Text-Adventure" target="_blank" style="text-decoration:none;">
+      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
+        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">Game · Data-driven · JSON</p>
+        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">Text Adventure Game</p>
+        <p style="font-size:13px; color:var(--text2);">Jeu d'aventure textuel avec parseur et combat, entièrement piloté par JSON.</p>
+      </div>
+    </a>
+    <a href="https://github.com/TheReturnedABought/Markov-Password-Predictor" target="_blank" style="text-decoration:none;">
+      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
+        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">Sécurité · Markov</p>
+        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">Markov Password Predictor</p>
+        <p style="font-size:13px; color:var(--text2);">Prédicteur de mots de passe par modèle probabiliste.</p>
+      </div>
+    </a>
+    <a href="https://github.com/TheReturnedABought/llmtraining" target="_blank" style="text-decoration:none;">
+      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
+        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">IA · LLM · Pipeline</p>
+        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">LLM Training Pipeline</p>
+        <p style="font-size:13px; color:var(--text2);">Pipeline d'entraînement basé sur des publications académiques.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">// 06 · contact</p>
+  <h2 class="section-title">Me contacter</h2>
+  <div class="divider"></div>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; max-width:700px;">
+    <div class="cv-card" style="margin:0;">
+      <div class="cv-icon" style="font-size:18px;">📧</div>
+      <div>
+        <strong style="display:block; margin-bottom:4px; font-size:14px;">Email</strong>
+        <a href="mailto:thomasgirboux@gmail.com" style="color:var(--accent); font-size:13px; text-decoration:none;">thomasgirboux@gmail.com</a>
+      </div>
+    </div>
+    <div class="cv-card" style="margin:0;">
+      <div class="cv-icon" style="font-size:18px;">📱</div>
+      <div>
+        <strong style="display:block; margin-bottom:4px; font-size:14px;">Téléphone</strong>
+        <span style="color:var(--text2); font-size:13px;">+32 470 79 46 05</span>
+      </div>
+    </div>
+    <div class="cv-card" style="margin:0;">
+      <div class="cv-icon" style="font-size:18px;">⌥</div>
+      <div>
+        <strong style="display:block; margin-bottom:4px; font-size:14px;">GitHub</strong>
+        <a href="https://github.com/TheReturnedABought" target="_blank" style="color:var(--accent); font-size:13px; text-decoration:none;">TheReturnedABought</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Thomas Girboux · Portfolio EPHEC — Technologies de l'Informatique · 2025–2026</p>
+  <p style="margin-top:6px; font-size:11px; color:var(--border);">Site accessible jusqu'à deux semaines après la communication des résultats.</p>
+</footer>
+
+<script>
+function toggle(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+document.querySelectorAll('.projet-box').forEach(card => {
+  card.addEventListener('mouseenter', () => card.style.borderColor = 'var(--accent)');
+  card.addEventListener('mouseleave', () => card.style.borderColor = 'var(--border)');
+});
+</script>
+</body>
+</html>
