@@ -244,17 +244,52 @@ section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
 .info-item { background: var(--bg3); border-radius: 6px; padding: 10px 14px; }
 .info-item span { display: block; font-family: var(--mono); font-size: 11px; color: var(--text2); margin-bottom: 3px; }
 .info-item strong { font-size: 13px; color: var(--text); font-weight: 500; }
+.hours-badge {
+  display: inline-flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+}
+.hours-item {
+  background: var(--bg3); border-radius: 6px; padding: 8px 14px;
+  font-family: var(--mono); font-size: 12px;
+}
+.hours-item .h-label { color: var(--text2); font-size: 11px; display: block; margin-bottom: 2px; }
+.hours-item .h-val { color: var(--text); font-size: 13px; font-weight: 500; }
+.hours-item.real .h-val { color: var(--accent2); }
+.hours-item.validated .h-val { color: var(--green); }
 .body-text { color: var(--text2); line-height: 1.8; margin-bottom: 1rem; }
 .body-text p { margin-bottom: 0.8rem; }
-.reflexive-placeholder {
-  background: rgba(240,165,0,0.06); border: 1px dashed rgba(240,165,0,0.4);
-  border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem;
+
+/* REFLEXIVE ANALYSIS */
+.reflexive-section {
+  background: rgba(240,165,0,0.04); border: 1px solid rgba(240,165,0,0.2);
+  border-radius: 8px; padding: 1.5rem; margin-top: 1rem;
 }
-.reflexive-placeholder .ph-label {
+.reflexive-section .ref-label {
   font-family: var(--mono); font-size: 11px; color: var(--accent);
-  letter-spacing: 0.08em; margin-bottom: 0.5rem;
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 8px;
 }
-.reflexive-placeholder p { color: var(--text2); font-size: 14px; }
+.reflexive-section p {
+  color: var(--text2); line-height: 1.85; margin-bottom: 0.9rem; font-size: 14px;
+}
+.reflexive-section p:last-child { margin-bottom: 0; }
+.reflexive-section p strong { color: var(--text); font-weight: 500; }
+
+/* IMAGE GALLERY */
+.image-gallery {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem; margin-top: 1.25rem;
+}
+.image-gallery img {
+  width: 100%; border-radius: 6px; border: 1px solid var(--border);
+  object-fit: cover; max-height: 200px; transition: border-color 0.2s;
+  cursor: pointer;
+}
+.image-gallery img:hover { border-color: var(--accent); }
+.image-gallery-empty {
+  font-family: var(--mono); font-size: 12px; color: var(--border);
+  padding: 0.75rem 0; font-style: italic;
+}
+
 .proof-link {
   display: inline-flex; align-items: center; gap: 6px;
   background: var(--bg3); border: 1px solid var(--border);
@@ -290,29 +325,25 @@ section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
 .cat-forensics { color: #34d399; }
 .cat-intro { color: var(--text2); }
 
-/* TIMELINE (CV section) */
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: 1px; background: var(--border);
-}
-.tl-item { position: relative; margin-bottom: 2rem; }
-.tl-dot {
-  position: absolute; left: -2rem; top: 5px;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--accent); border: 2px solid var(--bg);
-  transform: translateX(-4px);
-}
-.tl-date { font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 4px; }
-.tl-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-.tl-sub { font-size: 13px; color: var(--text2); }
-
 /* FOOTER */
 footer {
   border-top: 1px solid var(--border); padding: 2rem;
   text-align: center; color: var(--text2); font-family: var(--mono); font-size: 13px;
 }
 footer a { color: var(--accent); text-decoration: none; }
+
+/* LIGHTBOX */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: rgba(0,0,0,0.88); align-items: center; justify-content: center;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; }
+.lightbox-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  font-family: var(--mono); font-size: 1.5rem; color: var(--text2);
+  cursor: pointer; background: none; border: none;
+}
 
 /* RESPONSIVE */
 @media (max-width: 700px) {
@@ -328,6 +359,12 @@ footer a { color: var(--accent); text-decoration: none; }
 </style>
 </head>
 <body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
 
 <!-- NAVIGATION -->
 <nav>
@@ -347,8 +384,8 @@ footer a { color: var(--accent); text-decoration: none; }
     <p class="hero-tag">// portfolio EPHEC · Technologies de l'Informatique</p>
     <h1 class="hero-name">Thomas<br /><span>Girboux</span></h1>
     <p class="hero-sub">
-      Étudiant en informatique, passionné par l’IA, la cybersécurité et le développement logiciel.
-      Bilingue FR/EN, curieux et autonome, je transforme l’apprentissage en projets concrets.
+      Étudiant en informatique, passionné par l'IA, la cybersécurité et le développement logiciel.
+      Bilingue FR/EN, curieux et autonome, je transforme l'apprentissage en projets concrets.
     </p>
     <div class="hero-badges">
       <span class="badge accent">Intelligence Artificielle</span>
@@ -360,9 +397,7 @@ footer a { color: var(--accent); text-decoration: none; }
     <a href="ThomasGirbouxcv_Eng.pdf" download class="btn">📄 Télécharger le CV</a>
     <a href="#activites" class="btn outline">Voir mes activités ↓</a>
   </div>
-  <!-- Remplace src par ton chemin de photo -->
-  <img src="photo.jpg" alt="Thomas Girboux" class="hero-photo"
-       onerror="this.style.display='none'" />
+  <img src="photo.jpg" alt="Thomas Girboux" class="hero-photo" onerror="this.style.display='none'" />
   <div class="hero-scroll">scroll</div>
 </div>
 
@@ -374,19 +409,19 @@ footer a { color: var(--accent); text-decoration: none; }
   <div class="about-grid">
     <div class="about-text">
       <p>
-        Je m'appelle <strong>Thomas Girboux</strong>, j’ai 21 ans et je suis actuellement en
-        <strong>bachelier en informatique</strong> à l’EPHEC, avec une spécialisation progressive
+        Je m'appelle <strong>Thomas Girboux</strong>, j'ai 21 ans et je suis actuellement en
+        <strong>bachelier en informatique</strong> à l'EPHEC, avec une spécialisation progressive
         en développement web, bases de données et réseaux.
       </p>
       <p>
-        Diplômé de l’Institut du Sacré-Cœur de Nivelles (CESS – Sciences appliquées), j’ai grandi
-        entre la Belgique et les États-Unis, ce qui m’a permis de développer un bilinguisme naturel
+        Diplômé de l'Institut du Sacré-Cœur de Nivelles (CESS – Sciences appliquées), j'ai grandi
+        entre la Belgique et les États-Unis, ce qui m'a permis de développer un bilinguisme naturel
         français/anglais. Je dispose également de notions de néerlandais.
       </p>
       <p>
         En dehors des cours, je me consacre à des <strong>projets personnels en intelligence
         artificielle</strong>, à des challenges de cybersécurité (CTF) et à des hackathons.
-        Je suis convaincu que l’on apprend le mieux en construisant, en testant et en itérant.
+        Je suis convaincu que l'on apprend le mieux en construisant, en testant et en itérant.
       </p>
       <div class="cv-card">
         <div class="cv-icon">📋</div>
@@ -429,7 +464,7 @@ footer a { color: var(--accent); text-decoration: none; }
     <h3>Développeur spécialisé en IA &amp; Sécurité</h3>
     <p>
       Mon ambition est de devenir <strong style="color:var(--text)">développeur logiciel spécialisé en intelligence artificielle et en cybersécurité</strong>.
-      Ces deux domaines me passionnent, et je veux concevoir des solutions à la fois performantes, utiles et robustes — trois exigences devenues essentielles dans l’IT actuel.
+      Ces deux domaines me passionnent, et je veux concevoir des solutions à la fois performantes, utiles et robustes — trois exigences devenues essentielles dans l'IT actuel.
     </p>
     <br/>
     <p>
@@ -487,23 +522,23 @@ footer a { color: var(--accent); text-decoration: none; }
     </p>
     <br/>
     <p style="color:var(--text2); font-size:14px; font-style:italic;">
-      Les expériences les plus marquantes ont été celles menées sous contrainte de temps : elles m’ont appris
-      à prioriser, à communiquer clairement en équipe et à garder une approche structurée face à l’incertitude.
+      Les expériences les plus marquantes ont été celles menées sous contrainte de temps : elles m'ont appris
+      à prioriser, à communiquer clairement en équipe et à garder une approche structurée face à l'incertitude.
     </p>
   </div>
 
   <div class="themes-grid">
 
-    <!-- THEME 1 : HACKATHON 2024 -->
+    <!-- ═══ THEME 1 : HACKATHON 2024 ═══ -->
     <div class="theme-card">
       <div class="theme-header" onclick="toggle(this)">
         <div class="theme-header-left">
           <span class="theme-number">Thème 1</span>
-          <span class="theme-title-text">Hackathon 2024</span>
+          <span class="theme-title-text">Hackathon 2024 — Borne d'Arcade</span>
         </div>
         <div class="theme-meta">
           <span class="type-badge type-hackathon">Hackathon</span>
-          <span class="theme-hours">10h</span>
+          <span class="theme-hours">10h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -511,34 +546,49 @@ footer a { color: var(--accent); text-decoration: none; }
         <div class="activity-block">
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Hackathon présentiel</strong></div>
-            <div class="info-item"><span>Durée</span><strong>10 heures</strong></div>
             <div class="info-item"><span>Date</span><strong>[À compléter]</strong></div>
             <div class="info-item"><span>Lieu</span><strong>[À compléter]</strong></div>
+            <div class="info-item"><span>Format</span><strong>Équipe</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~24h (3 jours)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">10h</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Lors du Hackathon 2024, nous avons conçu et assemblé une borne d’arcade fonctionnelle à partir des composants fournis.</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Lors du Hackathon 2024, nous avons conçu et assemblé une borne d'arcade fonctionnelle à partir des composants fournis. L'objectif était de faire fonctionner l'ensemble — hardware et software — dans un délai de trois jours, en équipe.</p>
           </div>
-          <div class="reflexive-placeholder">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Utilise la première personne. Décris : (1) le contexte de l'événement, (2) ce que tu as concrètement appris (technique + soft skills), (3) en quoi cette expérience nourrit ton projet professionnel, (4) les liens avec tes forces ou faiblesses identifiées.</p>
+
+          <div class="reflexive-section">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Contexte et déroulement.</strong> Le Hackathon 2024 représentait ma première expérience d'un événement de ce type à l'EPHEC. L'idée de construire une borne d'arcade fonctionnelle à partir de composants fournis m'a immédiatement motivé : c'était un projet à la fois concret, visible et suffisamment ambitieux pour sortir de ma zone de confort. Dès le début, notre équipe a dû s'organiser rapidement, répartir les rôles et établir un plan de travail, car trois jours semblent longs mais passent extrêmement vite quand on travaille sur de l'intégration hardware/software.
+            </p>
+            <p>
+              <strong>Ce que j'ai appris techniquement.</strong> Sur le plan technique, j'ai pu découvrir comment relier des composants physiques — écran, contrôleurs, alimentation — à une logique logicielle. Cela m'a confronté à des problèmes que l'on ne rencontre pas dans le développement pur : les dépendances matérielles, la gestion des drivers, la fiabilité électrique. J'ai réalisé que le hardware impose une forme de rigueur différente du code : une erreur n'est pas simplement un bug à corriger, elle peut endommager un composant ou bloquer l'équipe entière.
+            </p>
+            <p>
+              <strong>Soft skills mobilisés.</strong> Ce qui m'a le plus surpris, c'est la dimension humaine du hackathon. Travailler aussi intensément avec des coéquipiers, souvent sous fatigue et pression, exige une communication claire et une capacité à gérer les désaccords sans blocage. J'ai appris à mieux articuler mes idées techniques face à des personnes qui ne partagent pas forcément la même vision, et à accepter des compromis quand une solution plus élégante devait être abandonnée faute de temps.
+            </p>
+            <p>
+              <strong>Lien avec mon projet professionnel.</strong> Cette expérience m'a conforté dans l'idée que les ingénieurs logiciels les plus efficaces sont ceux qui comprennent aussi les contraintes du monde physique et des systèmes intégrés. À terme, si je travaille dans la cybersécurité ou l'IA embarquée, cette sensibilité au hardware sera un vrai atout. Le hackathon m'a aussi montré que je peux produire sous pression : une qualité indispensable en environnement professionnel réel.
+            </p>
           </div>
-          <div style="margin-top:1rem;">
-            <a href="#" class="proof-link">[Preuve de participation — à ajouter]</a>
-          </div>
+
+          <div id="gallery-hackathon2024" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
       </div>
     </div>
 
-    <!-- THEME 2 : HACKATHON 2025 -->
+    <!-- ═══ THEME 2 : HACKATHON 2025 ═══ -->
     <div class="theme-card">
       <div class="theme-header" onclick="toggle(this)">
         <div class="theme-header-left">
           <span class="theme-number">Thème 2</span>
-          <span class="theme-title-text">Hackathon 2025</span>
+          <span class="theme-title-text">Hackathon 2025 — Marionnette Automatique</span>
         </div>
         <div class="theme-meta">
           <span class="type-badge type-hackathon">Hackathon</span>
-          <span class="theme-hours">10h</span>
+          <span class="theme-hours">10h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -546,25 +596,40 @@ footer a { color: var(--accent); text-decoration: none; }
         <div class="activity-block">
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Hackathon présentiel</strong></div>
-            <div class="info-item"><span>Durée</span><strong>10 heures</strong></div>
             <div class="info-item"><span>Date</span><strong>[À compléter]</strong></div>
             <div class="info-item"><span>Lieu</span><strong>[À compléter]</strong></div>
+            <div class="info-item"><span>Format</span><strong>Équipe</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~24h (3 jours)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">10h</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Hackathon 2025 we built an automatic marionette.</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Pour le Hackathon 2025, notre équipe a conçu et réalisé une marionnette automatique — un système mécatronique combinant mécanique, électronique et programmation pour animer une marionnette de manière autonome.</p>
           </div>
-          <div class="reflexive-placeholder">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Compare avec le hackathon 2023 si pertinent. Qu'as-tu fait différemment ? Quelles compétences nouvelles as-tu mobilisées ? Quels liens avec ton projet professionnel ?</p>
+
+          <div class="reflexive-section">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Progression par rapport à 2024.</strong> Avoir déjà participé au hackathon l'année précédente m'a donné un avantage non négligeable : je savais à quoi m'attendre en termes de rythme, de pression et d'organisation. Dès le lancement, j'ai pu adopter une posture plus proactive dans la structuration du projet — définir des sous-objectifs clairs, identifier les risques techniques en amont et répartir les tâches de manière plus efficace qu'en 2024.
+            </p>
+            <p>
+              <strong>Défis techniques de la marionnette automatique.</strong> Ce projet était d'une nature radicalement différente de la borne d'arcade : il s'agissait non seulement d'assembler du hardware, mais de concevoir un système de contrôle capable de produire des mouvements fluides et coordonnés. Nous avons travaillé avec des servomoteurs, des microcontrôleurs et un système de commande programmé. La grande difficulté résidait dans la synchronisation : obtenir des mouvements naturels et non mécaniques demande de fine-tuner chaque séquence d'actionnement, ce qui s'est avéré bien plus laborieux que prévu.
+            </p>
+            <p>
+              <strong>Ce que j'ai appris de nouveau.</strong> J'ai découvert concrètement les défis de la mécatronique : un système ne fonctionne bien que si chacune de ses couches — mécanique, électronique et logicielle — est correctement calibrée. Un bug dans le code peut avoir des conséquences physiques immédiates, et inversement, une pièce mal ajustée peut rendre le programme inopérant. Cette interdépendance m'a appris à penser de façon plus systémique, à diagnostiquer des problèmes qui traversent plusieurs niveaux d'abstraction.
+            </p>
+            <p>
+              <strong>Liens avec mes forces et mon projet professionnel.</strong> Ce hackathon a renforcé ma capacité à travailler sur des systèmes complexes où l'incertitude est forte et les délais serrés. Il a aussi mis en lumière ma tendance à vouloir résoudre les problèmes de façon élégante, quitte à y passer plus de temps que nécessaire — une faiblesse à calibrer en contexte de hackathon. À l'avenir, dans un rôle de développeur IA ou en cybersécurité, cette aptitude à raisonner sur des systèmes multicouches sera précieuse.
+            </p>
           </div>
-          <div style="margin-top:1rem;">
-            <a href="#" class="proof-link">Image 2 — Preuve de participation (Hackathon 2025)</a>
-          </div>
+
+          <div id="gallery-hackathon2025" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
       </div>
     </div>
 
-    <!-- THEME 3 : IA & MACHINE LEARNING -->
+    <!-- ═══ THEME 3 : IA & MACHINE LEARNING ═══ -->
     <div class="theme-card">
       <div class="theme-header" onclick="toggle(this)">
         <div class="theme-header-left">
@@ -573,7 +638,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="theme-meta">
           <span class="type-badge type-projet">Projets</span>
-          <span class="theme-hours">10h</span>
+          <span class="theme-hours">12h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -585,19 +650,36 @@ footer a { color: var(--accent); text-decoration: none; }
           <p class="activity-title">AI Sine Wave Approximator — Comment fonctionnent les réseaux de neurones</p>
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
-            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
             <div class="info-item"><span>Langage</span><strong>Python</strong></div>
             <div class="info-item"><span>Dépôt</span><strong>GitHub public</strong></div>
           </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~16h (2 jours)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
+          </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Dans ce projet, j'ai construit un réseau de neurones (sans bibliothèque d'abstraction) capable d'approximer une fonction sinusoïdale. La base de code est volontairement non structurée — ce qui m'a amené à comprendre les mécanismes de bas niveau avant d'adopter de bonnes pratiques.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> Fonctionnement d'un réseau de neurones (forward pass, backpropagation, fonctions d'activation), initiation au gradient descent, importance de la qualité du code.</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Dans ce projet, j'ai construit un réseau de neurones from scratch — sans bibliothèque d'abstraction comme TensorFlow ou PyTorch — capable d'approximer une fonction sinusoïdale. La base de code est volontairement non structurée, ce qui m'a poussé à comprendre chaque mécanisme de bas niveau avant d'envisager de meilleures pratiques.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Forward pass, backpropagation, fonctions d'activation, gradient descent, importance de la qualité du code.</p>
           </div>
+
           <a href="https://github.com/TheReturnedABought/AI_Sine_Wave_Approximator" target="_blank" class="proof-link gh-link">GitHub — AI_Sine_Wave_Approximator</a>
-          <div class="reflexive-placeholder" style="margin-top:1rem;">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Explique en quoi ce projet t'a appris les bases des NNs. Qu'est-ce que le code "messy" t'a enseigné ? Comment cela relie-il ta faiblesse en organisation du code à ton apprentissage ?</p>
+
+          <div class="reflexive-section" style="margin-top:1rem;">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Pourquoi ce projet, et pourquoi from scratch.</strong> J'ai délibérément choisi de ne pas utiliser PyTorch ou TensorFlow pour ce projet. Mon objectif n'était pas de produire un outil efficace, mais de comprendre ce qui se passe réellement à l'intérieur d'un réseau de neurones. Il est trop facile, avec les frameworks modernes, d'appeler <code>model.fit()</code> sans jamais comprendre ce que cela implique mathématiquement. En implémentant moi-même la forward pass, la backpropagation et la descente de gradient, j'ai dû confronter chaque concept de façon concrète.
+            </p>
+            <p>
+              <strong>Ce que le code "messy" m'a enseigné.</strong> La base de code est admettedly désordonnée — variables nommées à la va-vite, peu de modularité, logique entremêlée. Paradoxalement, c'est précisément ce désordre qui m'a appris quelque chose d'important : quand le code grossit et que l'on ne peut plus le relire facilement, les bugs deviennent exponentiellement plus difficiles à localiser. J'ai passé autant de temps à déboguer des erreurs dues à la mauvaise organisation du code qu'à résoudre des problèmes mathématiques réels. C'est une leçon que je n'aurais pas apprise aussi viscéralement en lisant un livre.
+            </p>
+            <p>
+              <strong>Lien avec ma faiblesse identifiée.</strong> Ce projet illustre directement mon axe d'amélioration en matière d'organisation du code. J'ai désormais une compréhension concrète de pourquoi les bonnes pratiques (séparation des responsabilités, nommage clair, commentaires) ne sont pas de la cosmétique mais des outils de productivité. La prochaine fois que je construirai un réseau de neurones from scratch, je commencerai par définir une architecture propre avant d'écrire la première ligne de logique.
+            </p>
+            <p>
+              <strong>Apport à mon projet professionnel.</strong> Comprendre le fonctionnement interne des réseaux de neurones est fondamental pour quiconque souhaite travailler sérieusement en IA. Ce niveau de compréhension me permet aujourd'hui d'interpréter les comportements de modèles plus complexes, d'identifier des pathologies d'entraînement (overfitting, vanishing gradient) et de lire des articles de recherche avec un œil plus critique. C'est une base que je consoliderai tout au long de ma carrière.
+            </p>
           </div>
+          <div id="gallery-sinwave" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
         <!-- 3b: AI Trader -->
@@ -606,17 +688,34 @@ footer a { color: var(--accent); text-decoration: none; }
           <p class="activity-title">AI Trader — Modèle de signaux financiers par ML</p>
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
-            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
             <div class="info-item"><span>Domaine</span><strong>IA + Finance</strong></div>
+            <div class="info-item"><span>Langage</span><strong>Python</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~24h (3 jours)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'un modèle IA qui prend en entrée des paramètres financiers quantitatifs et génère des signaux d'achat/vente. Ce projet m'a initié aux bases de l'analyse quantitative.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> Outils de base de l'analyse quantitative (indicateurs techniques, normalisation), pipeline de données, évaluation d'un modèle ML sur des données temporelles.</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'un modèle IA qui prend en entrée des paramètres financiers quantitatifs — indicateurs techniques, prix historiques, volumes — et génère des signaux d'achat/vente. Ce projet m'a initié aux bases de l'analyse quantitative appliquée.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Indicateurs techniques (RSI, MACD, moyennes mobiles), normalisation de données temporelles, pipeline de données, évaluation d'un modèle ML sur des séries temporelles.</p>
           </div>
-          <div class="reflexive-placeholder">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Décris le modèle construit, les difficultés rencontrées et les apprentissages. En quoi ce projet te prépare-t-il à ton projet pro (IA appliquée / fintech) ?</p>
+
+          <div class="reflexive-section">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Intersection entre IA et finance.</strong> Ce projet est né d'un intérêt personnel pour les marchés financiers et d'une question concrète : est-il possible d'automatiser des décisions de trading à partir de données purement quantitatives ? La réponse est nuancée, et c'est précisément ce que ce projet m'a appris. Les marchés sont des systèmes adaptatifs — ils réagissent aux stratégies qui tentent de les prédire — ce qui rend la généralisation d'un modèle ML particulièrement difficile.
+            </p>
+            <p>
+              <strong>Défis techniques rencontrés.</strong> Le premier obstacle a été la préparation des données. Les séries temporelles financières ne se traitent pas comme un dataset classique : il faut éviter le look-ahead bias (utiliser des données futures dans l'entraînement), normaliser correctement pour tenir compte de la non-stationnarité des prix, et construire des features pertinentes à partir d'indicateurs techniques. J'ai appris à calculer et interpréter le RSI, le MACD et plusieurs variantes de moyennes mobiles — des outils standard en analyse quantitative que je ne connaissais qu'en théorie.
+            </p>
+            <p>
+              <strong>Ce que j'ai appris sur l'évaluation de modèles financiers.</strong> Évaluer un modèle de trading est plus complexe qu'évaluer un classifieur classique. La précision (accuracy) ne suffit pas : ce qui compte, c'est la qualité des signaux au bon moment, la gestion du risque et la robustesse sur des périodes de marché variées. J'ai été confronté à du overfitting chronique — le modèle performait très bien sur les données d'entraînement mais échouait sur les données de test, ce qui m'a poussé à comprendre plus profondément les mécanismes de régularisation.
+            </p>
+            <p>
+              <strong>Lien avec mon projet professionnel.</strong> Ce projet m'a ouvert les yeux sur la fintech et l'analyse quantitative comme domaine professionnel. L'intersection entre l'IA et la finance me fascine, et je me vois potentiellement dans un rôle de développeur quantitatif ou d'ingénieur ML dans une institution financière — une trajectoire que mon passage chez SWIFT (activité 7b) a rendu encore plus tangible.
+            </p>
           </div>
+          <div id="gallery-aitrader" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
         <!-- 3c: Training pipeline -->
@@ -625,24 +724,42 @@ footer a { color: var(--accent); text-decoration: none; }
           <p class="activity-title">AI Training Pipeline — Appliquer des papiers de recherche</p>
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
-            <div class="info-item"><span>Durée</span><strong>2 heures</strong></div>
             <div class="info-item"><span>Dépôt</span><strong>GitHub public</strong></div>
+            <div class="info-item"><span>Langage</span><strong>Python</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~16h (2 jours)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Construction d'un pipeline d'entraînement complet pour un modèle IA, en m'appuyant directement sur des articles de recherche académiques.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> Comment lire et implémenter une publication scientifique, structurer un projet ML (data loading, training loop, validation, sauvegarde).</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Construction d'un pipeline d'entraînement complet pour un modèle de langage, en m'appuyant directement sur des articles de recherche académiques — notamment des travaux sur les architectures transformer et les techniques de préentraînement.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Lecture et implémentation de publications scientifiques, structuration d'un projet ML complet (data loading, training loop, validation, checkpointing).</p>
           </div>
+
           <a href="https://github.com/TheReturnedABought/llmtraining" target="_blank" class="proof-link gh-link">GitHub — llmtraining</a>
-          <div class="reflexive-placeholder" style="margin-top:1rem;">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Quel(s) paper(s) as-tu lu ? Quelles difficultés de compréhension as-tu rencontrées ? Qu'as-tu retenu de la démarche scientifique ? Lien avec ton projet pro.</p>
+
+          <div class="reflexive-section" style="margin-top:1rem;">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Apprendre à lire la recherche académique.</strong> Ce projet représente un passage important dans ma façon d'apprendre. Jusqu'alors, je m'appuyais principalement sur des tutoriels et de la documentation. Ici, je me suis imposé de partir directement des sources primaires : des articles publiés sur arXiv portant sur l'architecture des modèles de langage et les techniques d'entraînement. Ce changement de méthode a été difficile au début — le jargon académique et la densité mathématique des papers nécessitent une lecture active et patiente — mais extrêmement formatif.
+            </p>
+            <p>
+              <strong>Ce que j'ai implémenté et les difficultés rencontrées.</strong> Le pipeline comprend le chargement et la tokenisation des données textuelles, une boucle d'entraînement avec gradient accumulation, un système de validation et la sauvegarde de checkpoints. La principale difficulté était de réconcilier les descriptions parfois abstraites des papers avec du code fonctionnel. Certaines formules semblent simples sur papier mais cachent des subtilités importantes d'implémentation — notamment la gestion des dimensions de tenseurs et la stabilité numérique de certaines opérations.
+            </p>
+            <p>
+              <strong>Ce que la démarche scientifique m'a appris.</strong> Lire un paper de recherche m'a appris à distinguer ce qui est central (la contribution principale, les résultats clés) de ce qui est secondaire (les ablations, les détails d'implémentation spécifiques à un contexte). J'ai aussi appris à identifier les limites explicitement reconnues par les auteurs eux-mêmes — une forme d'honnêteté intellectuelle que j'essaie d'importer dans mes propres projets.
+            </p>
+            <p>
+              <strong>Apport à mon projet professionnel.</strong> Savoir lire et implémenter de la recherche est une compétence rare et très valorisée dans les équipes IA avancées. Cela m'ouvre la porte à des rôles de recherche appliquée ou d'ingénierie ML de haut niveau, où la capacité à transformer des innovations récentes en systèmes opérationnels est clé.
+            </p>
           </div>
+          <div id="gallery-pipeline" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
       </div>
     </div>
 
-    <!-- THEME 4 : ALGORITHMIQUE -->
+    <!-- ═══ THEME 4 : ALGORITHMIQUE ═══ -->
     <div class="theme-card">
       <div class="theme-header" onclick="toggle(this)">
         <div class="theme-header-left">
@@ -651,7 +768,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="theme-meta">
           <span class="type-badge type-projet">Projets</span>
-          <span class="theme-hours">8h</span>
+          <span class="theme-hours">8h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -663,19 +780,37 @@ footer a { color: var(--accent); text-decoration: none; }
           <p class="activity-title">Idea Generator — Chaînes de Markov</p>
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
-            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
             <div class="info-item"><span>Concept</span><strong>Chaînes de Markov</strong></div>
+            <div class="info-item"><span>Langage</span><strong>Python</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~4h (une après-midi)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'une application qui génère des idées de projets à l'aide de chaînes de Markov — un modèle probabiliste de génération de texte basé sur les transitions entre états.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> Théorie et implémentation des chaînes de Markov, génération de texte statistique, différences avec les approches deep learning (LLMs).</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'une application qui génère des idées de projets à l'aide de chaînes de Markov — un modèle probabiliste de génération de texte basé sur les transitions entre états. Le projet connexe Markov-Password-Predictor applique la même logique à la prédiction de mots de passe.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Théorie et implémentation des chaînes de Markov, génération de texte statistique, comparaison avec les LLMs modernes.</p>
           </div>
+
           <a href="https://github.com/TheReturnedABought/Idea-Generator" target="_blank" class="proof-link gh-link">GitHub — Idea-Generator</a>
           <a href="https://github.com/TheReturnedABought/Markov-Password-Predictor" target="_blank" class="proof-link gh-link">GitHub — Markov-Password-Predictor</a>
-          <div class="reflexive-placeholder" style="margin-top:1rem;">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Explique ce qu'est une chaîne de Markov, comment tu l'as implémentée, et ce que ce modèle t'a appris sur la génération probabiliste de texte. Comparaison avec les LLMs modernes ?</p>
+
+          <div class="reflexive-section" style="margin-top:1rem;">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Qu'est-ce qu'une chaîne de Markov et comment l'ai-je implémentée.</strong> Une chaîne de Markov est un modèle probabiliste dans lequel l'état suivant dépend uniquement de l'état actuel — et non de l'historique complet. Appliquée à la génération de texte, cela signifie que le prochain mot (ou caractère) est choisi en fonction de la probabilité qu'il suive le mot actuel, calculée à partir d'un corpus d'entraînement. J'ai implémenté cela en construisant un dictionnaire de transitions : pour chaque token observé dans le corpus, je stocke la liste de tous les tokens qui le suivent, puis je tire aléatoirement selon les fréquences observées.
+            </p>
+            <p>
+              <strong>Ce que j'ai appris sur la génération probabiliste.</strong> Le résultat est surprenant : avec un bon corpus, le texte généré est localement cohérent (les transitions mot-à-mot ont du sens) mais globalement incohérent (le sens global se perd rapidement). C'est une illustration parfaite de la limite fondamentale du modèle : l'absence de mémoire au-delà d'un token. En augmentant l'ordre de la chaîne (bigrams, trigrams), on améliore la cohérence locale mais on réduit la créativité — le modèle tend à reproduire des segments entiers du corpus.
+            </p>
+            <p>
+              <strong>Comparaison avec les LLMs modernes.</strong> Ce projet m'a aidé à contextualiser ce que font réellement les grands modèles de langage. Là où une chaîne de Markov n'a aucune représentation sémantique du texte, un LLM comme GPT ou Claude encode le sens dans des espaces vectoriels de haute dimension et maintient une forme de mémoire contextuelle sur des centaines de tokens. La différence n'est pas seulement de degré — c'est une différence de nature. Implémenter une chaîne de Markov m'a permis de comprendre, par contraste, pourquoi les architectures transformer ont constitué un saut aussi radical.
+            </p>
+            <p>
+              <strong>Application à la sécurité.</strong> Le projet Markov-Password-Predictor m'a montré une application directe en cybersécurité : un attaquant peut entraîner un modèle de Markov sur des listes de mots de passe compromis (rockyou.txt par exemple) pour générer des candidats bien plus réalistes qu'une approche par force brute naïve. Cela illustre pourquoi les politiques de mots de passe ne doivent pas se contenter d'imposer une longueur minimale.
+            </p>
           </div>
+          <div id="gallery-markov" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
         <!-- 4b: Text Adventure -->
@@ -684,24 +819,42 @@ footer a { color: var(--accent); text-decoration: none; }
           <p class="activity-title">Text Adventure Game — Architecture orientée données</p>
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
-            <div class="info-item"><span>Durée</span><strong>4 heures</strong></div>
             <div class="info-item"><span>Tech</span><strong>JSON / Data-driven</strong></div>
+            <div class="info-item"><span>Langage</span><strong>Python</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~24h (3 jours)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">4h</span></div>
           </div>
           <div class="body-text">
             <p><strong style="color:var(--text)">Contexte :</strong> Développement d'un jeu d'aventure textuel entièrement piloté par des données JSON, avec un parseur de variables et un système de combat. L'objectif était de séparer strictement la logique du contenu pour faciliter l'expansion.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> Architecture data-driven, parsing de commandes textuelles, conception de systèmes modulaires et extensibles, importance de la séparation données/logique.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Architecture data-driven, parsing de commandes textuelles, conception de systèmes modulaires et extensibles.</p>
           </div>
+
           <a href="https://github.com/TheReturnedABought/Text-Adventure" target="_blank" class="proof-link gh-link">GitHub — Text-Adventure</a>
-          <div class="reflexive-placeholder" style="margin-top:1rem;">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Décris l'architecture du jeu : comment fonctionne le parseur ? Pourquoi avoir choisi JSON pour les données ? Quels défis de conception as-tu rencontrés ? Qu'as-tu appris sur le design de systèmes extensibles ?</p>
+
+          <div class="reflexive-section" style="margin-top:1rem;">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Pourquoi une architecture data-driven.</strong> Dès le début du projet, j'ai pris une décision de conception fondamentale : toutes les données du jeu — salles, objets, ennemis, dialogues, règles de combat — seraient définies dans des fichiers JSON externes, jamais codées en dur dans la logique Python. L'objectif était de pouvoir modifier, étendre ou remplacer le contenu sans toucher au code du moteur. C'est une approche courante dans le développement de jeux vidéo professionnels, et je voulais en comprendre les avantages et les contraintes.
+            </p>
+            <p>
+              <strong>Comment fonctionne le parseur.</strong> Le parseur de commandes lit l'entrée de l'utilisateur (par exemple "go north", "attack goblin with sword", "take key") et la décompose en verbe, objet direct et modificateurs. Il résout ensuite les variables contextuelles — la salle courante, l'inventaire du joueur, les ennemis présents — pour exécuter l'action correspondante. La difficulté principale était de gérer les ambiguïtés : que faire si le joueur tape "take" sans préciser d'objet ? Ou s'il fait référence à un objet par un alias non prévu dans le JSON ? J'ai dû concevoir un système de fallback et de messages d'erreur contextuels.
+            </p>
+            <p>
+              <strong>Défis de conception et leçons apprises.</strong> Le plus grand défi a été de définir un schéma JSON assez flexible pour décrire des situations variées, sans devenir si générique qu'il perde en lisibilité. J'ai réalisé que la conception d'un bon format de données est un exercice de design à part entière — similaire à la conception d'une API. Chaque fois que j'ajoutais une nouvelle fonctionnalité (le combat, les objets utilisables, les conditions d'accès à certaines salles), je devais décider si elle méritait un nouveau champ JSON ou si elle pouvait être gérée par la logique existante.
+            </p>
+            <p>
+              <strong>Apport à mon projet professionnel.</strong> Ce projet m'a initié aux principes de séparation des responsabilités et de conception orientée données qui sont au cœur du développement logiciel professionnel. Que ce soit dans le développement web (séparation front/back), l'IA (séparation configuration/logique d'entraînement) ou la cybersécurité (séparation règles/moteur de détection), ces principes s'appliquent partout. C'est un projet dont je suis particulièrement fier pour sa qualité architecturale, qui contraste avec le code désorganisé du projet Sine Wave.
+            </p>
           </div>
+          <div id="gallery-textadv" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
       </div>
     </div>
 
-    <!-- THEME 5 : CYBERSECURITE -->
+    <!-- ═══ THEME 5 : CYBERSECURITE ═══ -->
     <div class="theme-card">
       <div class="theme-header" onclick="toggle(this)">
         <div class="theme-header-left">
@@ -710,7 +863,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="theme-meta">
           <span class="type-badge type-challenge">Challenge</span>
-          <span class="theme-hours">10h</span>
+          <span class="theme-hours">10h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -721,6 +874,10 @@ footer a { color: var(--accent); text-decoration: none; }
             <div class="info-item"><span>Format</span><strong>CTF (Capture The Flag)</strong></div>
             <div class="info-item"><span>Classement</span><strong>343e / tous</strong></div>
             <div class="info-item"><span>Score</span><strong>1144 points</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~8-10h (une journée)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">10h</span></div>
           </div>
           <div class="ctf-stats">
             <div class="ctf-stat"><div class="val">343</div><div class="lbl">Classement</div></div>
@@ -743,17 +900,37 @@ footer a { color: var(--accent); text-decoration: none; }
               <tr><td>Welcome to the Qualifiers!</td><td class="cat-intro">Intro</td><td>50</td><td>Feb 27, 5:51 PM</td></tr>
             </tbody>
           </table>
+
           <a href="https://ctf.cybersecuritychallenge.be/challenges" target="_blank" class="proof-link" style="margin-top:1.5rem;">ctf.cybersecuritychallenge.be</a>
-          <p style="margin-top:0.75rem; color:var(--text2); font-size:13px;">Image 3 — Preuve du Cybersecurity Challenge.</p>
-          <div class="reflexive-placeholder" style="margin-top:1rem;">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Décris ton expérience du CTF : comment t'es-tu préparé, quels challenges t'ont le plus appris (cryptographie, reverse engineering, forensics), quelles techniques as-tu découvertes ? Qu'est-ce que ça t'a révélé sur la cybersécurité en tant que domaine ? Lien avec ton projet professionnel.</p>
+
+          <div class="reflexive-section" style="margin-top:1.5rem;">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Contexte et préparation.</strong> Le Cyber Security Challenge Belgium est la principale compétition CTF du pays, ouverte aux étudiants belges. J'ai décidé d'y participer sans préparation structurée préalable, ce qui était à la fois une décision audacieuse et honnête : je voulais mesurer mon niveau réel, pas celui que j'aurais après un entraînement ciblé. En une journée intense, j'ai résolu 8 challenges couvrant 4 catégories différentes — cryptographie, reverse engineering, forensics et introduction.
+            </p>
+            <p>
+              <strong>Cryptographie — les challenges les plus formateurs.</strong> Les deux challenges de cryptographie (Bill's Gates et Time Capsule) ont été ceux qui m'ont le plus appris. Bill's Gates notamment m'a exposé à des vulnérabilités classiques dans des systèmes cryptographiques mal implémentés. L'essence d'un challenge de crypto CTF, c'est de trouver le point faible dans une implémentation apparemment correcte — une clé trop courte, une IV réutilisée, un padding oracle. Cela m'a fait comprendre que la sécurité cryptographique n'est pas binaire : un algorithme solide peut être rendu totalement inefficace par une mauvaise utilisation.
+            </p>
+            <p>
+              <strong>Reverse Engineering — entrer dans la boîte noire.</strong> Les deux challenges de reverse engineering (Neon Nights, D3? Brew) ont été parmi les plus stimulants intellectuellement. L'objectif est d'analyser un binaire compilé — dont on n'a pas le code source — pour comprendre ce qu'il fait et extraire un flag caché. J'ai utilisé des outils de désassemblage et de décompilation pour reconstruire la logique du programme. C'est une compétence directement applicable en cybersécurité défensive : comprendre comment les malwares fonctionnent nécessite exactement les mêmes techniques.
+            </p>
+            <p>
+              <strong>Forensics — analyser des traces numériques.</strong> Les trois challenges de forensics (Is This a Rainbow?, Catch of the Day, Snapshots) m'ont confronté à l'analyse d'artefacts numériques : images, captures réseau, snapshots mémoire. Ces challenges m'ont initié aux techniques d'investigation numérique — extraction de métadonnées cachées, analyse de trafic réseau, récupération de données dans des images disque.
+            </p>
+            <p>
+              <strong>Ce que le CTF m'a révélé sur la cybersécurité.</strong> La cybersécurité est un domaine qui exige une curiosité insatiable, une pensée latérale et une capacité à relier des domaines très différents. Un bon challenger doit à la fois comprendre la cryptographie mathématique, l'architecture des systèmes, la programmation bas niveau et les protocoles réseau. Le CTF m'a montré que j'ai des bases solides en crypto et en RE, et des lacunes à combler en forensics avancée et en exploitation web. Cette cartographie précise de mes forces et faiblesses est en elle-même une valeur de l'expérience.
+            </p>
+            <p>
+              <strong>Lien avec mon projet professionnel.</strong> Participer au CSC Belgium a cristallisé mon intérêt pour la cybersécurité comme domaine professionnel. Un classement de 343e sur l'ensemble des participants belges, sans préparation spécifique, me donne une base de départ réelle sur laquelle m'appuyer pour progresser. Je compte participer à l'édition suivante après une préparation plus structurée.
+            </p>
           </div>
+
+          <div id="gallery-ctf" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
       </div>
     </div>
 
-    <!-- THEME 6 : CLOUD & INFRASTRUCTURE -->
+    <!-- ═══ THEME 6 : CLOUD & INFRASTRUCTURE ═══ -->
     <div class="theme-card">
       <div class="theme-header" onclick="toggle(this)">
         <div class="theme-header-left">
@@ -762,7 +939,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="theme-meta">
           <span class="type-badge type-conference">Conférence</span>
-          <span class="theme-hours">2h</span>
+          <span class="theme-hours">2h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -774,23 +951,42 @@ footer a { color: var(--accent); text-decoration: none; }
             <div class="info-item"><span>Durée</span><strong>2 heures</strong></div>
             <div class="info-item"><span>Intervenant</span><strong>Kevin Keurvels — Axentys</strong></div>
           </div>
-          <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Conférence organisée par l'EPHEC, animée par Kevin Keurvels de la société <em>Axentys</em> (Services et support informatiques pour professionnels). La session d'environ 2 heures portait sur les services cloud Microsoft — Azure et Microsoft 365 — dans un contexte professionnel.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> Vue d'ensemble de l'écosystème Azure, intégration de M365 dans une infrastructure d'entreprise, concepts clés du cloud (IaaS, PaaS, SaaS) dans un contexte concret.</p>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">2h</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">2h</span></div>
           </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Conférence organisée par l'EPHEC, animée par Kevin Keurvels de la société <em>Axentys</em>. La session portait sur les services cloud Microsoft — Azure et Microsoft 365 — dans un contexte professionnel de déploiement et de support pour entreprises.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Vue d'ensemble de l'écosystème Azure, intégration de M365 en entreprise, concepts clés du cloud (IaaS, PaaS, SaaS) dans un contexte concret.</p>
+          </div>
+
           <div style="margin: 1rem 0; padding: 1rem; background: var(--bg3); border-radius: 8px; font-size: 13px; color: var(--text2);">
             <strong style="color:var(--text);">📧 Preuve de participation :</strong><br/>
-            Attestation nominative reçue par email de Marie-Noël Vroman (EPHEC) le 3 novembre 2025.<br/>Image 4 — Capture de l'attestation de participation (conférence Azure/M365).
+            Attestation nominative reçue par email de Marie-Noël Vroman (EPHEC) le 3 novembre 2025.
           </div>
-          <div class="reflexive-placeholder">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Qu'as-tu appris sur le cloud Microsoft ? En quoi Azure diffère-t-il des alternatives (AWS, GCP) ? Comment cette introduction répond-elle à ta faiblesse identifiée en Cloud/Infrastructure ? Quelles pistes de formation complémentaires envisages-tu ?</p>
+
+          <div class="reflexive-section">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Contexte et déroulement de la conférence.</strong> Cette conférence, animée par Kevin Keurvels d'Axentys — une société de services informatiques pour professionnels — m'a offert ma première exposition structurée à l'écosystème cloud Microsoft en contexte professionnel réel. L'angle adopté par l'intervenant était délibérément pratique : moins de théorie abstraite, davantage de cas concrets de déploiement et de support chez des clients PME/ETI.
+            </p>
+            <p>
+              <strong>Ce que j'ai appris sur l'écosystème Azure.</strong> Azure est articulé autour de trois grandes catégories de services : l'IaaS (Infrastructure as a Service), qui fournit des machines virtuelles et du stockage à la demande ; le PaaS (Platform as a Service), qui abstrait l'infrastructure pour permettre aux développeurs de se concentrer sur le code ; et le SaaS (Software as a Service), dont Microsoft 365 est l'exemple le plus répandu. Cette taxonomie, que je connaissais de façon abstraite, a pris un sens beaucoup plus concret en entendant comment un prestataire comme Axentys choisit entre ces options selon les contraintes du client (budget, compétences internes, besoins de scalabilité).
+            </p>
+            <p>
+              <strong>Azure vs AWS vs GCP.</strong> L'intervenant a brièvement comparé les trois grands hyperscalers. Azure se distingue par son intégration native avec l'écosystème Microsoft (Active Directory, Teams, Office) — un avantage considérable dans des environnements d'entreprise déjà standardisés sur Windows et M365. AWS reste leader en part de marché et en richesse de services, tandis que GCP est particulièrement fort sur les services analytiques et l'IA (BigQuery, Vertex AI). Ce positionnement différencié m'a aidé à comprendre que le choix d'un cloud n'est pas technique mais stratégique : il dépend de l'existant, des compétences disponibles et des cas d'usage prioritaires.
+            </p>
+            <p>
+              <strong>Lien avec ma faiblesse identifiée et pistes de formation.</strong> Cette conférence a confirmé que mon manque d'expérience pratique en cloud est un axe de progression réel. Deux heures de conférence introductive ne suffisent pas à acquérir des compétences opérationnelles, mais elles m'ont permis de cartographier l'écosystème et d'identifier des pistes concrètes : la certification AZ-900 (Azure Fundamentals) me semble un premier objectif réaliste, suivi d'une pratique sur l'offre gratuite Azure pour déployer des projets personnels.
+            </p>
           </div>
+
+          <div id="gallery-azure" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
       </div>
     </div>
 
-    <!-- THEME 7 : EXPERIENCE PRO / SOFT SKILLS -->
+    <!-- ═══ THEME 7 : EXPERIENCE PRO / SOFT SKILLS ═══ -->
     <div class="theme-card">
       <div class="theme-header" onclick="toggle(this)">
         <div class="theme-header-left">
@@ -799,7 +995,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="theme-meta">
           <span class="type-badge type-experience">Expérience</span>
-          <span class="theme-hours">10h</span>
+          <span class="theme-hours">10h validées</span>
           <span class="theme-chevron">▾</span>
         </div>
       </div>
@@ -812,17 +1008,34 @@ footer a { color: var(--accent); text-decoration: none; }
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Job étudiant</strong></div>
             <div class="info-item"><span>Période</span><strong>Nov. 2023 – Avr. 2025</strong></div>
-            <div class="info-item"><span>Durée</span><strong>10 heures (portfolio)</strong></div>
             <div class="info-item"><span>Langues</span><strong>FR / EN</strong></div>
+            <div class="info-item"><span>Contexte</span><strong>Musée historique</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">Poste récurrent (17 mois)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">10h</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Poste d'accueil étudiant dans un musée historique à fréquentation touristique internationale. Responsabilités : accueil bilingue (FR/EN), gestion des paiements et surveillance des espaces.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> Communication professionnelle en contexte multiculturel, gestion des situations délicates avec les visiteurs, fiabilité et ponctualité en milieu de travail réel.</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Poste d'accueil étudiant dans un musée historique à fréquentation touristique internationale. Responsabilités : accueil bilingue FR/EN, gestion des paiements, surveillance des espaces et assistance aux visiteurs.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> Communication professionnelle en contexte multiculturel, gestion de situations délicates, fiabilité et ponctualité en milieu de travail réel.</p>
           </div>
-          <div class="reflexive-placeholder">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Quelles situations concrètes as-tu gérées ? Comment ce poste a-t-il renforcé tes soft skills (communication, gestion du stress, adaptabilité) ? Quels liens avec tes compétences professionnelles futures ?</p>
+
+          <div class="reflexive-section">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>Un environnement humain exigeant.</strong> Le Dernier QG de Napoléon est un musée historique qui accueille des visiteurs venant du monde entier — groupes touristiques anglophones, familles belges, scolaires francophones, passionnés d'histoire de toutes nationalités. Tenir le poste d'accueil dans ce contexte signifiait passer d'une langue à l'autre plusieurs fois par heure, adapter son registre de communication (familier avec les familles, formel avec les groupes organisés, pédagogique avec les enfants) et gérer des situations imprévues sans filet.
+            </p>
+            <p>
+              <strong>Situations concrètes gérées.</strong> Parmi les situations qui m'ont le plus fait grandir : gérer des visiteurs mécontents (attente trop longue, problème de billet), expliquer des procédures de sécurité à des personnes ne parlant pas nos langues de travail, ou assurer la surveillance seul lors de visites tardives. Dans chacun de ces cas, la solution n'était pas technique — elle demandait du calme, de l'empathie et une communication claire sous pression. Ce sont exactement les soft skills que l'on ne peut pas apprendre dans un livre de cours.
+            </p>
+            <p>
+              <strong>Développement du bilinguisme professionnel.</strong> Mon bilinguisme français/anglais est une donnée biographique — j'ai grandi entre la Belgique et les États-Unis — mais ce poste m'a appris à le mobiliser dans un contexte professionnel. Être bilingue dans la vie quotidienne est différent d'être bilingue face à un client ou un groupe de touristes : il faut maîtriser le vocabulaire spécialisé (histoire militaire, architecture du XIXe siècle), adapter son accent et son débit, et rester professionnel même quand la conversation prend une tournure imprévue.
+            </p>
+            <p>
+              <strong>Lien avec mes compétences professionnelles futures.</strong> Dans le secteur IT, la communication est souvent sous-estimée par les étudiants qui se concentrent sur les compétences techniques. Pourtant, un développeur ou un ingénieur en sécurité qui sait communiquer clairement avec des interlocuteurs non-techniques — clients, managers, équipes commerciales — a un avantage concurrentiel réel. Ce poste m'a appris à synthétiser l'essentiel, à anticiper les questions et à ajuster mon discours selon mon interlocuteur : des compétences que j'utilise déjà dans mes présentations académiques.
+            </p>
           </div>
+          <div id="gallery-musee" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
         <!-- 7b: SWIFT -->
@@ -831,18 +1044,38 @@ footer a { color: var(--accent); text-decoration: none; }
           <p class="activity-title">Job d'été chez SWIFT — Automatisation Excel &amp; Macros</p>
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Job d'été</strong></div>
-            <div class="info-item"><span>Entreprise</span><strong>SWIFT (institution financière)</strong></div>
-            <div class="info-item"><span>Durée</span><strong>Validé (0h EPHEC)</strong></div>
+            <div class="info-item"><span>Entreprise</span><strong>SWIFT</strong></div>
             <div class="info-item"><span>Tech</span><strong>Excel / VBA / Macros</strong></div>
+            <div class="info-item"><span>Secteur</span><strong>Infrastructure financière</strong></div>
+          </div>
+          <div class="hours-badge">
+            <div class="hours-item real"><span class="h-label">Heures réelles</span><span class="h-val">~120h (3 semaines)</span></div>
+            <div class="hours-item validated"><span class="h-label">Heures validées EPHEC</span><span class="h-val">0h (validé)</span></div>
           </div>
           <div class="body-text">
-            <p><strong style="color:var(--text)">Contexte :</strong> Stage/job d'été au sein de SWIFT, acteur central de l'infrastructure financière mondiale. J'ai appliqué des macros Excel avancées pour automatiser des tâches de traitement de données.</p>
-            <p><strong style="color:var(--text)">Apprentissages :</strong> VBA et automatisation Excel en contexte professionnel réel, compréhension du fonctionnement d'une grande institution financière, rigueur et précision requises dans le secteur financier.</p>
+            <p><strong style="color:var(--text)">Contexte :</strong> Job d'été au sein de SWIFT — la coopérative mondiale qui gère l'infrastructure de messagerie financière interbancaire utilisée par plus de 11 000 institutions dans 200 pays. J'ai appliqué des macros Excel avancées pour automatiser des tâches de traitement de données au sein d'une équipe opérationnelle.</p>
+            <p><strong style="color:var(--text)">Apprentissages :</strong> VBA et automatisation Excel en contexte professionnel réel, rigueur requise dans le secteur financier, compréhension de l'infrastructure financière mondiale.</p>
           </div>
-          <div class="reflexive-placeholder">
-            <div class="ph-label">✍ Analyse réflexive — À rédiger (minimum 1 page)</div>
-            <p>Quelles tâches as-tu automatisées ? Quelles macros as-tu développées ? En quoi ce passage chez SWIFT a-t-il changé ta vision de l'automatisation et de l'informatique en milieu bancaire ? Lien avec ton projet professionnel (fintech/quantitative) ?</p>
+
+          <div class="reflexive-section">
+            <div class="ref-label">✍ Analyse réflexive</div>
+            <p>
+              <strong>SWIFT : un environnement professionnel d'exception.</strong> Travailler chez SWIFT, même en tant que job d'été, est une expérience rare. SWIFT n'est pas une banque — c'est l'infrastructure sur laquelle repose la communication entre les banques du monde entier. Chaque message SWIFT représente une transaction financière réelle : une erreur dans le traitement des données peut avoir des conséquences qui se propagent à travers des chaînes de règlement internationales. Ce contexte m'a immédiatement imposé un niveau de rigueur et d'attention aux détails que je n'avais pas encore expérimenté dans mes projets personnels.
+            </p>
+            <p>
+              <strong>Ce que j'ai automatisé et comment.</strong> Mon rôle consistait à automatiser des processus de traitement de données répétitifs qui étaient effectués manuellement par les équipes opérationnelles. En pratique, cela signifiait analyser les étapes manuelles existantes, identifier les patterns répétables, puis écrire des macros VBA capables de reproduire ces étapes de façon fiable. J'ai notamment travaillé sur des consolidations de rapports multi-feuilles, des transformations de formats de données et des générateurs de tableaux récapitulatifs. Chaque macro était validée manuellement avant déploiement pour s'assurer qu'elle produisait exactement les mêmes résultats que le processus manuel.
+            </p>
+            <p>
+              <strong>Ce que ce contexte m'a appris sur l'automatisation.</strong> Dans mes projets personnels, l'automatisation est un outil de productivité personnelle. Chez SWIFT, c'était un outil de fiabilité organisationnelle : l'objectif n'était pas de travailler plus vite, mais de produire des résultats parfaitement reproductibles, auditables et résistants aux erreurs humaines. J'ai compris que dans un contexte professionnel critique, la valeur d'un script ne réside pas dans son élégance mais dans sa robustesse et sa lisibilité — deux qualités que je travaille encore à développer dans mes projets personnels.
+            </p>
+            <p>
+              <strong>Vision de l'informatique en milieu bancaire.</strong> Ce passage chez SWIFT m'a donné un aperçu concret de la façon dont les grandes institutions financières utilisent l'informatique. Contrairement à ce qu'on pourrait imaginer, une partie significative du travail opérationnel repose encore sur des outils bureautiques — Excel en tête — plutôt que sur des systèmes entièrement automatisés. Cela m'a montré l'immense potentiel d'amélioration que représente une meilleure ingénierie logicielle dans ce secteur, et conforté mon intérêt pour la fintech et l'IA appliquée à la finance.
+            </p>
+            <p>
+              <strong>Lien avec mon projet professionnel.</strong> Ce job d'été a rendu tangible une trajectoire professionnelle que je n'avais envisagée qu'en théorie : travailler à l'intersection de la technologie et de la finance. Après avoir vu de l'intérieur comment fonctionne une institution comme SWIFT, je me sens encore plus motivé à construire des compétences solides en IA et en sécurité pour, à terme, contribuer à moderniser des systèmes financiers critiques.
+            </p>
           </div>
+          <div id="gallery-swift" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
       </div>
@@ -931,15 +1164,95 @@ footer a { color: var(--accent); text-decoration: none; }
 </footer>
 
 <script>
+/* ═══════════════════════════════════════════════════════════════
+   IMAGE CONFIGURATION
+   Add image paths (relative to index.html) for each activity.
+   You can add as many images as you want per gallery.
+   Leave arrays empty [] to show nothing.
+   ═══════════════════════════════════════════════════════════════ */
+const PORTFOLIO_IMAGES = {
+  hackathon2024:  [
+    // 'images/hackathon2024_1.jpg',
+    // 'images/hackathon2024_2.jpg',
+  ],
+  hackathon2025:  [
+    // 'images/hackathon2025_1.jpg',
+    // 'images/hackathon2025_2.jpg',
+  ],
+  sinwave:        [
+    // 'images/sinwave_output.png',
+  ],
+  aitrader:       [
+    // 'images/trader_signals.png',
+  ],
+  pipeline:       [
+    // 'images/pipeline_loss.png',
+  ],
+  markov:         [
+    // 'images/markov_output.png',
+    // 'images/markov_password.png',
+  ],
+  textadv:        [
+    // 'images/textadv_screenshot.png',
+  ],
+  ctf:            [
+    // 'images/ctf_scoreboard.png',
+    // 'images/ctf_challenges.png',
+  ],
+  azure:          [
+    // 'images/azure_attestation.png',
+  ],
+  musee:          [
+    // 'images/musee_badge.jpg',
+  ],
+  swift:          [
+    // 'images/swift_badge.jpg',
+    // 'images/swift_excel.png',
+  ],
+};
+
+/* ── Render galleries ── */
+function renderGalleries() {
+  Object.entries(PORTFOLIO_IMAGES).forEach(([key, paths]) => {
+    const el = document.getElementById('gallery-' + key);
+    if (!el) return;
+    if (!paths || paths.length === 0) return; // hide if empty
+    paths.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = key;
+      img.loading = 'lazy';
+      img.onclick = () => openLightbox(src);
+      el.appendChild(img);
+    });
+  });
+}
+
+/* ── Lightbox ── */
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* ── Accordion toggle ── */
 function toggle(header) {
   header.classList.toggle('open');
   const body = header.nextElementSibling;
   body.classList.toggle('open');
 }
+
+/* ── Project card hover ── */
 document.querySelectorAll('.projet-box').forEach(card => {
   card.addEventListener('mouseenter', () => card.style.borderColor = 'var(--accent)');
   card.addEventListener('mouseleave', () => card.style.borderColor = 'var(--border)');
 });
+
+/* ── Init ── */
+renderGalleries();
 </script>
 </body>
 </html>
