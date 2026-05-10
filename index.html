@@ -394,10 +394,10 @@ footer a { color: var(--accent); text-decoration: none; }
       <span class="badge">Réseaux</span>
       <span class="badge">FR / EN</span>
     </div>
-    <a href="ThomasGirbouxcv_Eng.pdf" download class="btn">📄 Télécharger le CV</a>
+    <a href="cv.pdf" download class="btn">📄 Télécharger le CV</a>
     <a href="#activites" class="btn outline">Voir mes activités ↓</a>
   </div>
-  <img src="photo.jpg" alt="Thomas Girboux" class="hero-photo" onerror="this.style.display='none'" />
+  <img src="photo.svg" alt="Thomas Girboux" class="hero-photo" onerror="this.style.display='none'" />
   <div class="hero-scroll">scroll</div>
 </div>
 
@@ -428,7 +428,7 @@ footer a { color: var(--accent); text-decoration: none; }
         <div>
           <strong style="display:block; margin-bottom:4px;">Curriculum Vitae</strong>
           <span style="color:var(--text2); font-size:13px;">Anglais · Formation, expériences, compétences</span><br/>
-          <a href="ThomasGirbouxcv_Eng.pdf" download class="btn" style="margin-top:0.75rem; padding:8px 18px; font-size:13px;">Télécharger</a>
+          <a href="cv.pdf" download class="btn" style="margin-top:0.75rem; padding:8px 18px; font-size:13px;">Télécharger</a>
         </div>
       </div>
     </div>
@@ -718,9 +718,26 @@ footer a { color: var(--accent); text-decoration: none; }
           <div id="gallery-aitrader" class="image-gallery" style="margin-top:1.25rem;"></div>
         </div>
 
-        <!-- 3c: Training pipeline -->
+        <!-- 3c: NNVisualiser -->
         <div class="activity-block">
           <p class="activity-label">Activité 3c</p>
+          <p class="activity-title">NNVisualiser — Visualiser le fonctionnement d'un réseau de neurones</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
+            <div class="info-item"><span>Stack</span><strong>HTML / CSS / JavaScript</strong></div>
+            <div class="info-item"><span>Format</span><strong>Démo web interactive</strong></div>
+          </div>
+          <div class="body-text">
+            <p><strong style="color:var(--text)">Contexte :</strong> Développement d'un visualiseur interactif qui explique la logique d'un réseau de neurones directement dans le navigateur. Le projet est consultable en ligne et disponible sur GitHub.</p>
+          </div>
+          <a href="https://thereturnedabought.github.io/NNVisualiser/" target="_blank" class="proof-link">Démo en ligne — NNVisualiser</a>
+          <a href="https://github.com/TheReturnedABought/NNVisualiser/blob/main/index.html" target="_blank" class="proof-link gh-link">Code source — index.html</a>
+          <div id="gallery-nnvisualiser" class="image-gallery" style="margin-top:1.25rem;"></div>
+        </div>
+
+        <!-- 3c: Training pipeline -->
+        <div class="activity-block">
+          <p class="activity-label">Activité 3d</p>
           <p class="activity-title">AI Training Pipeline — Appliquer des papiers de recherche</p>
           <div class="info-grid">
             <div class="info-item"><span>Type</span><strong>Projet personnel</strong></div>
@@ -1125,6 +1142,13 @@ footer a { color: var(--accent); text-decoration: none; }
         <p style="font-size:13px; color:var(--text2);">Pipeline d'entraînement basé sur des publications académiques.</p>
       </div>
     </a>
+    <a href="https://github.com/TheReturnedABought/NNVisualiser" target="_blank" style="text-decoration:none;">
+      <div class="projet-box" style="cursor:pointer; transition: border-color 0.2s; border: 1px solid var(--border); padding:1.25rem;">
+        <p style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">IA · Visualisation · Web</p>
+        <p style="font-weight:500; color:var(--text); margin-bottom:6px;">NNVisualiser</p>
+        <p style="font-size:13px; color:var(--text2);">Visualisation interactive de réseaux de neurones avec démonstration web en ligne.</p>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -1172,42 +1196,46 @@ footer a { color: var(--accent); text-decoration: none; }
    ═══════════════════════════════════════════════════════════════ */
 const PORTFOLIO_IMAGES = {
   hackathon2024:  [
-    // 'images/hackathon2024_1.jpg',
-    // 'images/hackathon2024_2.jpg',
+    // 'images/hackathon2024_1.svg',
+    // 'images/hackathon2024_2.svg',
   ],
   hackathon2025:  [
-    // 'images/hackathon2025_1.jpg',
-    // 'images/hackathon2025_2.jpg',
+    // 'images/hackathon2025_1.svg',
+    // 'images/hackathon2025_2.svg',
   ],
   sinwave:        [
-    // 'images/sinwave_output.png',
+    // 'images/sinwave_output.svg',
   ],
   aitrader:       [
-    // 'images/trader_signals.png',
+    // 'images/trader_signals.svg',
+  ],
+  nnvisualiser:   [
+    'images/nnvisualiser_demo.svg',
+    'images/nnvisualiser_repo.svg',
   ],
   pipeline:       [
-    // 'images/pipeline_loss.png',
+    // 'images/pipeline_loss.svg',
   ],
   markov:         [
-    // 'images/markov_output.png',
-    // 'images/markov_password.png',
+    // 'images/markov_output.svg',
+    // 'images/markov_password.svg',
   ],
   textadv:        [
-    // 'images/textadv_screenshot.png',
+    // 'images/textadv_screenshot.svg',
   ],
   ctf:            [
-    // 'images/ctf_scoreboard.png',
-    // 'images/ctf_challenges.png',
+    // 'images/ctf_scoreboard.svg',
+    // 'images/ctf_challenges.svg',
   ],
   azure:          [
-    // 'images/azure_attestation.png',
+    // 'images/azure_attestation.svg',
   ],
   musee:          [
-    // 'images/musee_badge.jpg',
+    // 'images/musee_badge.svg',
   ],
   swift:          [
-    // 'images/swift_badge.jpg',
-    // 'images/swift_excel.png',
+    // 'images/swift_badge.svg',
+    // 'images/swift_excel.svg',
   ],
 };
 
