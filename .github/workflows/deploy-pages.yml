@@ -26,10 +26,45 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Ensure Pages site exists
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            try {
+              await github.rest.repos.getPages({ owner, repo });
+              core.info('GitHub Pages site already exists.');
+              return;
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+            }
+
+            core.info('GitHub Pages site not found. Attempting to create it for workflow deployments...');
+            try {
+              await github.rest.repos.createPagesSite({
+                owner,
+                repo,
+                build_type: 'workflow',
+                source: { branch: 'main', path: '/' }
+              });
+              core.info('Successfully created GitHub Pages site.');
+            } catch (error) {
+              if (error.status === 403) {
+                core.setFailed(
+                  'Unable to create GitHub Pages site with GITHUB_TOKEN (403). ' +
+                  'A repository admin must enable Pages once in Settings > Pages, then re-run this workflow.'
+                );
+                return;
+              }
+              throw error;
+            }
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
