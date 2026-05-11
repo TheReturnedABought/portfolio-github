@@ -294,17 +294,15 @@
     <h2 class="section-title">Mon projet professionnel</h2>
     <div class="divider"></div>
     <div class="projet-box">
-        <h3>Développeur spécialisé en IA &amp; Sécurité</h3>
+        <h3>Développeur spécialisé en IA</h3>
         <p>
             Mon ambition est de devenir <strong style="color:var(--text)">développeur logiciel spécialisé en intelligence artificielle</strong>.
-            Ce domaine me passionnent profondément, et je veux concevoir des solutions à la fois performantes, utiles et robustes — trois exigences devenues incontournables dans l'IT actuel.
+            Ce domaine me passionne profondément, et je veux concevoir des solutions à la fois performantes, utiles et robustes — trois exigences devenues incontournables dans l'IT actuel.
         </p>
-        <br />
         <p>
             À court terme, je souhaite consolider mes bases en développement (web, API, algorithmique) tout en approfondissant mes compétences en machine learning et en sécurité des systèmes.
             À moyen terme, je vise une carrière dans une entreprise technologique innovante, idéalement en fintech ou en IA appliquée.
         </p>
-        <br />
         <p style="color:var(--text2)">
             <em style="font-family:var(--serif)">
                 Ma vision à cinq ans : contribuer à des produits concrets qui améliorent le quotidien des utilisateurs, tout en garantissant un haut niveau de fiabilité et de sécurité technique.
@@ -1037,11 +1035,26 @@
     <h2 class="section-title">Me contacter</h2>
     <div class="divider"></div>
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; max-width:700px;">
-        <div class="cv-card" style="margin:0;">
+        <div class="cv-card" style="margin:0; min-width:0;">
             <div class="cv-icon" style="font-size:18px;">📧</div>
-            <div>
-                <strong style="display:block; margin-bottom:4px; font-size:14px;">Email</strong>
-                <a href="mailto:thomasgirboux@gmail.com" style="color:var(--accent); font-size:13px; text-decoration:none;">thomasgirboux@gmail.com</a>
+
+            <div style="min-width:0;">
+                <strong style="display:block; margin-bottom:4px; font-size:14px;">
+                    Email
+                </strong>
+
+                <a
+                        href="mailto:thomasgirboux@gmail.com"
+                        style="
+                color:var(--accent);
+                font-size:13px;
+                text-decoration:none;
+                overflow-wrap:anywhere;
+                word-break:break-word;
+            "
+                >
+                    thomasgirboux@gmail.com
+                </a>
             </div>
         </div>
         <div class="cv-card" style="margin:0;">
@@ -1055,7 +1068,14 @@
             <div class="cv-icon" style="font-size:18px;">⌥</div>
             <div>
                 <strong style="display:block; margin-bottom:4px; font-size:14px;">GitHub</strong>
-                <a href="https://github.com/TheReturnedABought" target="_blank" style="color:var(--accent); font-size:13px; text-decoration:none;">TheReturnedABought</a>
+                <a href="https://github.com/TheReturnedABought" target="_blank"                      style="
+                color:var(--accent);
+                font-size:13px;
+                text-decoration:none;
+                overflow-wrap:anywhere;
+                word-break:break-word;
+            "
+                >TheReturnedABought</a>
             </div>
         </div>
     </div>
@@ -1073,8 +1093,8 @@
         gameoflife:    ['images/conways.png'],
         ctf:           ['images/ctf_scoreboard.png'],
         azure:         ['images/Azure.png'],
-        musee:         ['images/placeholder.svg'],
-        swift:         ['images/placeholder.svg'],
+        musee:         ['images/musee.png'],
+        swift:         ['images/swift.png'],
         kaggle:        ['images/cert.png'],
     };
 
